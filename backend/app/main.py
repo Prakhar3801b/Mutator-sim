@@ -12,10 +12,13 @@ app = FastAPI(
 )
 
 # CORS Middleware
+# The browser client talks to this API through a same-origin proxy
+# (Next.js rewrite) and sends no cookies/credentials, so credentialed
+# CORS is unnecessary. Origins come from settings (CORS_ORIGINS env var).
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
