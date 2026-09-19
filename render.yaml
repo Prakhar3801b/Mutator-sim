@@ -1,0 +1,35 @@
+# Render Blueprint — Mutator Sim backend (FastAPI + Supabase Postgres).
+#
+# Deploy from the Render dashboard via: New + -> Blueprint -> select this
+# repository, or create the Web Service manually using the same commands and
+# environment variables listed here.
+#
+# Secrets are never stored in this file: entries marked `sync: false` are
+# prompted for in the Render dashboard at deploy time.
+services:
+  - type: web
+    name: mutator-sim-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    healthCheckPath: /api/health
+    buildCommand: pip install -r requirements.txt
+    # Migrations must be applied before the API accepts traffic. Running them
+    # at startup works on every instance type (including free tier) and also
+    # self-heals the schema after a cold start.
+    startCommand: alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      # Pin a Python version with mature wheels for scikit-learn/numpy.
+      - key: PYTHON_VERSION
+        value: "3.12.6"
+      # Supabase Postgres — Session pooler URI (port 5432), e.g.
+      # postgresql://postgres.<project-ref>:<PASSWORD>@aws-0-<region>.pooler.supabase.com:5432/postgres
+      - key: DATABASE_URL
+        sync: false
+      # Comma-separated list of allowed browser origins (the Vercel app URL),
+      # e.g. https://mutator-sim.vercel.app
+      - key: CORS_ORIGINS
+        sync: false
+      # Optional: raises the NCBI E-utilities rate limit from ~3 to 10 req/s.
+      - key: NCBI_API_KEY
+        sync: false
