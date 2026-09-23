@@ -61,7 +61,17 @@ def run_all_tests():
     assert pred_rad["pathogenic_probability"] > 0.4
     print("PASS: test_prediction_radical")
 
-    print("\nALL 6 BACKEND TEST SUITES PASSED SUCCESSFULLY!")
+    # Test 7: Anatomy Curated Knowledge
+    from app.api.anatomy import CURATED_ANATOMY_KNOWLEDGE
+    assert "BRCA1" in CURATED_ANATOMY_KNOWLEDGE
+    assert "TP53" in CURATED_ANATOMY_KNOWLEDGE
+    assert "HBB" in CURATED_ANATOMY_KNOWLEDGE
+    assert "CFTR" in CURATED_ANATOMY_KNOWLEDGE
+    assert len(CURATED_ANATOMY_KNOWLEDGE["BRCA1"]["organs"]) >= 3
+    print("PASS: test_anatomy_knowledge_base")
+
+    print("\nALL 7 BACKEND TEST SUITES PASSED SUCCESSFULLY!")
 
 if __name__ == "__main__":
     run_all_tests()
+

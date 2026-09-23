@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.database.db import init_db
 from app.ml.model import get_trained_model
-from app.api import genes, sequences, mutations, variants, literature, predictions, reports
+from app.api import genes, sequences, mutations, variants, literature, predictions, reports, anatomy
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -37,6 +37,8 @@ app.include_router(variants.router, prefix=settings.API_PREFIX)
 app.include_router(literature.router, prefix=settings.API_PREFIX)
 app.include_router(predictions.router, prefix=settings.API_PREFIX)
 app.include_router(reports.router, prefix=settings.API_PREFIX)
+app.include_router(anatomy.router, prefix=settings.API_PREFIX)
+
 
 @app.get("/api/health")
 def health_check():

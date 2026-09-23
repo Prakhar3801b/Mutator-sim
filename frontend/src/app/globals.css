@@ -1,20 +1,34 @@
 :root {
-  --bg-main: #070a14;
-  --bg-card: rgba(14, 22, 40, 0.75);
-  --bg-card-hover: rgba(20, 31, 56, 0.85);
-  --bg-input: #0a1122;
+  /* Minimalist Color Grading (Clinical Modern Dark Palette) */
+  --bg-main: #0b0f19;
+  --bg-surface: #111827;
+  --bg-card: rgba(17, 24, 39, 0.78);
+  --bg-card-hover: rgba(26, 36, 56, 0.9);
+  --bg-input: #0e1526;
   --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-active: rgba(59, 130, 246, 0.4);
   --border-glow: rgba(0, 242, 254, 0.25);
   
+  /* Minimalist Graded Accents inspired by medical analytics */
+  --c-blue-primary: #3b82f6;
+  --c-blue-soft: #60a5fa;
+  --c-cyan-vibrant: #06b6d4;
+  --c-teal-card: #0d9488;
+  --c-emerald-safe: #10b981;
+  --c-rose-danger: #f43f5e;
+  --c-amber-warn: #f59e0b;
+  --c-violet-accent: #8b5cf6;
+
   /* Color Coding System */
   --c-original: #10b981;    /* 🟢 Original / unchanged */
-  --c-mutated: #ef4444;     /* 🔴 Mutated / changed */
-  --c-flow: #00f2fe;        /* 🔵 Information flow */
-  --c-consequence: #f59e0b; /* 🟡 Consequence */
+  --c-mutated: #f43f5e;     /* 🔴 Mutated / changed */
+  --c-flow: #38bdf8;        /* 🔵 Information flow */
+  --c-consequence: #fbbf24; /* 🟡 Consequence */
   --c-ml: #a855f7;          /* 🟣 ML Analysis */
   --c-neutral: #94a3b8;     /* ⚪ Context / metadata */
   
   --text-main: #f8fafc;
+  --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
   --text-dim: #64748b;
   
@@ -24,12 +38,13 @@
   --nt-g: #f59e0b; /* Guanine - Amber */
   --nt-t: #ef4444; /* Thymine - Red */
   
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 9999px;
   
   --font-mono: 'JetBrains Mono', monospace, ui-monospace;
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 * {
@@ -41,8 +56,9 @@
 body {
   background-color: var(--bg-main);
   background-image: 
-    radial-gradient(circle at 15% 15%, rgba(0, 242, 254, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.05) 0%, transparent 40%);
+    radial-gradient(ellipse at 20% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 10%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(6, 182, 212, 0.05) 0%, transparent 60%);
   color: var(--text-main);
   font-family: var(--font-sans);
   min-height: 100vh;
@@ -50,30 +66,64 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Glassmorphic Cards */
+/* Glassmorphic & Minimalist Dashboard Cards */
 .glass-panel {
   background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.35);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-panel:hover {
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* Medical Metric Hero Card (Inspired by Reference 2) */
+.metric-card {
+  padding: 1.25rem 1.4rem;
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid var(--border-subtle);
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+}
+
+.metric-card-blue {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(37, 99, 235, 0.05) 100%);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.metric-card-cyan {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.18) 0%, rgba(14, 116, 144, 0.05) 100%);
+  border-color: rgba(6, 182, 212, 0.3);
+}
+
+.metric-card-rose {
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.18) 0%, rgba(190, 18, 60, 0.05) 100%);
+  border-color: rgba(244, 63, 94, 0.3);
+}
+
+.metric-card-emerald {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(5, 150, 105, 0.05) 100%);
+  border-color: rgba(16, 185, 129, 0.3);
 }
 
 /* Glowing Accent Panels */
 .panel-glow-cyan {
-  border-color: rgba(0, 242, 254, 0.3);
-  box-shadow: 0 0 25px rgba(0, 242, 254, 0.08);
+  border-color: rgba(6, 182, 212, 0.35);
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.08);
 }
 
 .panel-glow-purple {
-  border-color: rgba(168, 85, 247, 0.3);
+  border-color: rgba(168, 85, 247, 0.35);
   box-shadow: 0 0 25px rgba(168, 85, 247, 0.08);
 }
 
@@ -82,19 +132,20 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.25rem 0.6rem;
+  padding: 0.25rem 0.65rem;
   border-radius: var(--radius-sm);
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 
 .badge-green { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-.badge-red { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
-.badge-cyan { background: rgba(0, 242, 254, 0.15); color: #00f2fe; border: 1px solid rgba(0, 242, 254, 0.3); }
+.badge-red { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+.badge-cyan { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid rgba(6, 182, 212, 0.3); }
 .badge-amber { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
 .badge-purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+.badge-blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
 
 /* Buttons */
 .btn {
@@ -113,18 +164,18 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: #fff;
-  box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
 }
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 114, 255, 0.45);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text-main);
   border: 1px solid var(--border-subtle);
 }
@@ -135,17 +186,18 @@ body {
 }
 
 .btn-simulate {
-  background: linear-gradient(135deg, #ef4444, #f97316);
+  background: linear-gradient(135deg, #f43f5e, #ea580c);
   color: #fff;
-  box-shadow: 0 4px 18px rgba(239, 68, 68, 0.4);
-  font-size: 1rem;
-  padding: 0.8rem 1.6rem;
+  box-shadow: 0 4px 18px rgba(244, 63, 94, 0.4);
+  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
 }
 
 .btn-simulate:hover {
-  box-shadow: 0 6px 25px rgba(239, 68, 68, 0.55);
+  box-shadow: 0 6px 25px rgba(244, 63, 94, 0.55);
   transform: scale(1.02);
 }
+
 
 /* Form Controls */
 .input-control {
@@ -237,9 +289,64 @@ body {
   }
 }
 
-.reduced-motion * {
-  animation: none !important;
-  transition: none !important;
+/* Anatomy Canvas & Organ Hotspots (Inspired by Reference 3) */
+.anatomy-container {
+  display: grid;
+  grid-template-columns: 340px 1fr 380px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 1200px) {
+  .anatomy-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hotspot-node {
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hotspot-node:hover circle.hotspot-pin {
+  transform: scale(1.3);
+  filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8));
+}
+
+.hotspot-node.active circle.hotspot-pin {
+  stroke: #fff;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 0 14px rgba(244, 63, 94, 0.9));
+}
+
+.radar-ring {
+  animation: radarWave 2s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform-origin: center;
+}
+
+@keyframes radarWave {
+  0% { r: 6px; opacity: 0.9; stroke-width: 2px; }
+  100% { r: 24px; opacity: 0; stroke-width: 0.5px; }
+}
+
+/* Clinical Protocol Cards matching Reference 3 */
+.clinical-card {
+  background: rgba(17, 24, 39, 0.7);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  transition: all 0.2s ease;
+}
+
+.clinical-card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(26, 36, 56, 0.75);
+}
+
+.clinical-card-active {
+  border-color: var(--c-blue-primary);
+  background: rgba(30, 58, 138, 0.25);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
 }
 
 /* Responsive Grid Layouts */
@@ -263,3 +370,4 @@ body {
     grid-template-columns: 1fr;
   }
 }
+

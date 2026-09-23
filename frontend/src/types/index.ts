@@ -177,3 +177,25 @@ export interface LiteratureResponse {
   articles: PubMedArticle[];
   publication_trend: Record<string, number>;
 }
+
+export interface OrganImpact {
+  id: string;
+  name: string;
+  system: string;
+  severity: "high" | "moderate" | "low" | "unaffected";
+  description: string;
+  symptoms: string[];
+  risk_level: string;
+  biochemical_mechanism: string;
+}
+
+export interface AnatomyImpactResponse {
+  gene_symbol: string;
+  variant: string;
+  primary_condition: string;
+  overview_summary: string;
+  cellular_pathway: string;
+  affected_organs: OrganImpact[];
+  ai_provider: string;
+}
+

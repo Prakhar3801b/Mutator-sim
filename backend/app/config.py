@@ -36,8 +36,13 @@ class Settings(BaseModel):
     # Database Settings
     DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./mutator_sim.db")
 
+    # AI External API Keys
+    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+    OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
+
     # CORS (comma-separated list via CORS_ORIGINS, e.g.
     # "https://mutator-sim.vercel.app,http://localhost:3000")
     CORS_ORIGINS: list[str] = _parse_cors_origins(os.getenv("CORS_ORIGINS", ""))
 
 settings = Settings()
+

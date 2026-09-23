@@ -36,7 +36,9 @@ import {
   fetchLiterature
 } from "@/lib/api";
 
-import { FileDown, Loader2 } from "lucide-react";
+import Link from "next/link";
+import { Navbar } from "@/components/Navbar";
+import { FileDown, Loader2, Activity, ArrowRight, Dna, ShieldCheck, Zap } from "lucide-react";
 
 export default function Home() {
   // App state
@@ -141,7 +143,6 @@ export default function Home() {
   // Apply benchmark mutation preset
   const handleApplyBenchmark = (bm: BenchmarkMutation) => {
     if (!sequenceRecord) return;
-    // Cap position within current sample sequence
     const clampedPos = Math.min(bm.position, sequenceRecord.sequence.length);
     setPosition(clampedPos);
     const ref = sequenceRecord.sequence[clampedPos - 1] || bm.ref;
@@ -161,7 +162,6 @@ export default function Home() {
     setIsSimulating(true);
     setIsLoadingEvidence(true);
     try {
-      // 1. Run deterministic bioinformatics mutation simulation
       const simRes = await simulateMutation({
         sequence: seq,
         position: pos,
@@ -172,7 +172,6 @@ export default function Home() {
       });
       setSimulation(simRes);
 
-      // 2. Concurrently fetch ML impact prediction, ClinVar evidence, and PubMed literature
       const proteinChange = `p.${simRes.amino_acid.original_aa_code}${simRes.amino_acid.residue_index}${simRes.amino_acid.modified_aa_code}`;
 
       const [predRes, clinvarRes, litRes] = await Promise.allSettled([
@@ -220,22 +219,112 @@ export default function Home() {
   };
 
   return (
-    <div className={`main-container ${reducedMotion ? "reduced-motion" : ""}`}>
-      {/* 1. App Header */}
-      <Header
+    <div className={`main-container ${reducedMotion ? "reduced-motion" : ""}`} style={{ gap: "1.25rem" }}>
+      {/* 1. App Unified Navigation Bar */}
+      <Navbar
         reducedMotion={reducedMotion}
         onToggleReducedMotion={() => setReducedMotion(!reducedMotion)}
         onReset={handleReset}
+        activeGeneSymbol={geneDetail?.symbol}
       />
 
-      {/* 2. Featured Genes Carousel for 1-Click Exploration */}
+      {/* 2. Medical Diagnostic Metrics Overview (Inspired by Reference 1 & 2 Dashboards) */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+          gap: "1rem"
+        }}
+      >
+        <div className="metric-card metric-card-blue">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--c-blue-soft)", fontWeight: 700 }}>
+              Active Gene
+            </span>
+            <Dna size={18} color="#60a5fa" />
+          </div>
+          <div style={{ fontSize: "1.6rem", fontWeight: 700, margin: "0.4rem 0 0.1rem" }}>
+            {geneDetail ? geneDetail.symbol : "Loading..."}
+          </div>
+          <div style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>
+            Chr {geneDetail?.chromosome || "17"} &bull; {geneDetail?.organism || "Homo sapiens"}
+          </div>
+        </div>
+
+        <div className="metric-card metric-card-rose">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "#fb7185", fontWeight: 700 }}>
+              Mutation Consequence
+            </span>
+            <span className="badge badge-red" style={{ fontSize: "0.65rem" }}>
+              {simulation ? simulation.classification : "In Silico"}
+            </span>
+          </div>
+          <div style={{ fontSize: "1.6rem", fontWeight: 700, margin: "0.4rem 0 0.1rem" }}>
+            {simulation ? `pos ${simulation.position}: ${simulation.original_base}→${simulation.new_base}` : "Select base"}
+          </div>
+          <div style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>
+            {simulation ? `${simulation.amino_acid.original_aa_name} → ${simulation.amino_acid.modified_aa_name}` : "Awaiting run"}
+          </div>
+        </div>
+
+        <div className="metric-card metric-card-cyan">
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "#38bdf8", fontWeight: 700 }}>
+              Pathogenic Probability
+            </span>
+            <span className="badge badge-cyan" style={{ fontSize: "0.65rem" }}>
+              ML Scikit-Learn
+            </span>
+          </div>
+          <div style={{ fontSize: "1.6rem", fontWeight: 700, margin: "0.4rem 0 0.1rem", color: "#38bdf8" }}>
+            {prediction ? `${(prediction.pathogenic_probability * 100).toFixed(1)}%` : "--"}
+          </div>
+          <div style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>
+            {prediction?.risk_tier || "Confidence: 0.85"}
+          </div>
+        </div>
+
+        <div className="metric-card metric-card-emerald" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "#34d399", fontWeight: 700 }}>
+                Human Body Impact
+              </span>
+              <Activity size={18} color="#34d399" />
+            </div>
+            <div style={{ fontSize: "1.05rem", fontWeight: 700, margin: "0.4rem 0 0.1rem" }}>
+              Anatomy Explorer
+            </div>
+            <div style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
+              View whole-body organ pathophysiology & symptoms
+            </div>
+          </div>
+          <Link
+            href="/anatomy"
+            className="btn btn-primary"
+            style={{
+              marginTop: "0.6rem",
+              padding: "0.45rem 0.85rem",
+              fontSize: "0.78rem",
+              width: "100%",
+              background: "linear-gradient(135deg, #059669, #0d9488)"
+            }}
+          >
+            Launch Body Viewer
+            <ArrowRight size={14} />
+          </Link>
+        </div>
+      </div>
+
+      {/* 3. Featured Genes Carousel for 1-Click Exploration */}
       <FeaturedGenes
         genes={featuredGenes}
         selectedGeneId={selectedGeneId}
         onSelectGene={(g) => loadGene(g.gene_id)}
       />
 
-      {/* 3. NCBI Gene Search with Debounce & Organism Filter */}
+      {/* 4. NCBI Gene Search with Debounce & Organism Filter */}
       <GeneSearch
         onSelectGene={(geneId) => loadGene(geneId)}
         selectedGeneId={selectedGeneId}
@@ -251,8 +340,9 @@ export default function Home() {
         </div>
       )}
 
-      {/* 4. Sequence Viewer (Interactive Codon Ribbon) */}
+      {/* 5. Sequence Viewer (Interactive Codon Ribbon) */}
       {sequenceRecord && geneDetail && (
+
         <SequenceViewer
           geneSymbol={geneDetail.symbol}
           transcripts={geneDetail.transcripts}

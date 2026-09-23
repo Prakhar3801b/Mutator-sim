@@ -129,3 +129,20 @@ export async function generateMarkdownReport(payload: Record<string, unknown>): 
   if (!res.ok) throw new Error("Report generation failed");
   return res.json();
 }
+
+export async function fetchAnatomyImpact(payload: {
+  gene_symbol: string;
+  mutation_hgvs?: string;
+  amino_acid_change?: string;
+  consequence_type?: string;
+  clinical_significance?: string;
+}): Promise<import("@/types").AnatomyImpactResponse> {
+  const res = await fetch(`${API_BASE}/anatomy/impact`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error("Anatomy impact retrieval failed");
+  return res.json();
+}
+
