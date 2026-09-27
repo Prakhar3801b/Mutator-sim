@@ -2,6 +2,7 @@
 
 Computational platform for NCBI gene discovery, mutation simulation, codon translation, and ML impact analysis.
 
+try it at : https://mutator-sim.vercel.app/
 ## Architecture
 
 | Layer | Stack | Hosting |
