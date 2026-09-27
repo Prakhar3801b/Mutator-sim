@@ -81,17 +81,26 @@ export const MutationPipeline: React.FC<MutationPipelineProps> = ({
   } = simulation;
 
   return (
-    <div className="glass-panel panel-glow-cyan">
+    <div
+      className="neo-card"
+      style={{
+        background: "#ffffff",
+        border: "3px solid #000000",
+        boxShadow: "5px 5px 0px #000000",
+        borderRadius: "8px",
+        padding: "1.5rem"
+      }}
+    >
       {/* Header & Controls */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem", marginBottom: "1.25rem" }}>
         <div>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
             <span className="badge badge-cyan">Visual Propagation Centerpiece</span>
-            <h2 style={{ fontSize: "1.15rem", fontWeight: 700 }}>
+            <h2 style={{ fontSize: "1.2rem", fontWeight: 800, fontFamily: "var(--font-display)" }}>
               Molecular Transformation Pipeline
             </h2>
           </div>
-          <p style={{ fontSize: "0.8rem", color: "var(--text-muted)", marginTop: "0.2rem" }}>
+          <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)", fontWeight: 600, marginTop: "0.2rem" }}>
             Watch the computational consequences ripple from DNA to Codon to Protein
           </p>
         </div>
@@ -102,7 +111,7 @@ export const MutationPipeline: React.FC<MutationPipelineProps> = ({
             onClick={() => setCurrentStage((prev) => Math.max(1, prev - 1))}
             disabled={currentStage <= 1}
             className="btn btn-secondary"
-            style={{ padding: "0.4rem 0.6rem" }}
+            style={{ padding: "0.4rem 0.65rem" }}
             title="Step Back"
           >
             <SkipBack size={15} />
@@ -118,7 +127,7 @@ export const MutationPipeline: React.FC<MutationPipelineProps> = ({
               }
             }}
             className="btn btn-primary"
-            style={{ padding: "0.4rem 0.8rem", minWidth: "90px" }}
+            style={{ padding: "0.4rem 0.9rem", minWidth: "95px" }}
           >
             {currentStage >= 8 ? (
               <>
@@ -139,7 +148,7 @@ export const MutationPipeline: React.FC<MutationPipelineProps> = ({
             onClick={() => setCurrentStage((prev) => Math.min(8, prev + 1))}
             disabled={currentStage >= 8}
             className="btn btn-secondary"
-            style={{ padding: "0.4rem 0.6rem" }}
+            style={{ padding: "0.4rem 0.65rem" }}
             title="Step Forward"
           >
             <SkipForward size={15} />
@@ -148,7 +157,7 @@ export const MutationPipeline: React.FC<MutationPipelineProps> = ({
           {/* Speed selector */}
           <select
             className="input-control"
-            style={{ width: "auto", padding: "0.35rem 0.6rem", fontSize: "0.75rem" }}
+            style={{ width: "auto", padding: "0.35rem 0.65rem", fontSize: "0.78rem", fontWeight: 700 }}
             value={speed}
             onChange={(e) => setSpeed(parseFloat(e.target.value))}
           >
@@ -160,7 +169,7 @@ export const MutationPipeline: React.FC<MutationPipelineProps> = ({
       </div>
 
       {/* 8-Stage Progress Stepper Bar */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(8, 1fr)", gap: "0.4rem", marginBottom: "1.5rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(8, 1fr)", gap: "0.45rem", marginBottom: "1.5rem" }}>
         {STAGES.map((s) => {
           const isDone = currentStage >= s.id;
           const isCurrent = currentStage === s.id;
@@ -173,26 +182,24 @@ export const MutationPipeline: React.FC<MutationPipelineProps> = ({
               }}
               style={{
                 background: isCurrent
-                  ? "rgba(0, 242, 254, 0.25)"
+                  ? "#ffe600"
                   : isDone
-                  ? "rgba(16, 185, 129, 0.15)"
-                  : "rgba(255, 255, 255, 0.03)",
-                borderBottom: isCurrent
-                  ? "3px solid var(--c-flow)"
-                  : isDone
-                  ? "3px solid var(--c-original)"
-                  : "3px solid rgba(255, 255, 255, 0.1)",
-                padding: "0.5rem 0.25rem",
-                borderRadius: "var(--radius-sm)",
+                  ? "#00e599"
+                  : "#faf7f0",
+                border: "2px solid #000000",
+                boxShadow: isCurrent ? "3px 3px 0px #000000" : isDone ? "2px 2px 0px #000000" : "1px 1px 0px #000000",
+                transform: isCurrent ? "translate(-2px, -2px)" : "none",
+                padding: "0.5rem 0.35rem",
+                borderRadius: "4px",
                 cursor: "pointer",
                 textAlign: "center",
-                transition: "all 0.2s ease"
+                transition: "all 0.12s ease"
               }}
             >
-              <div style={{ fontSize: "0.7rem", fontWeight: 700, color: isCurrent ? "#00f2fe" : isDone ? "#34d399" : "var(--text-dim)" }}>
+              <div style={{ fontSize: "0.72rem", fontWeight: 800, color: "#000000", fontFamily: "var(--font-mono)" }}>
                 Stage {s.id}
               </div>
-              <div style={{ fontSize: "0.65rem", color: isCurrent ? "#fff" : "var(--text-dim)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "#222222", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                 {s.title.split(". ")[1]}
               </div>
             </div>
@@ -201,22 +208,25 @@ export const MutationPipeline: React.FC<MutationPipelineProps> = ({
       </div>
 
       {/* Main Visual Transformation Canvas */}
-      <div style={{
-        background: "rgba(7, 10, 20, 0.6)",
-        border: "1px solid var(--border-subtle)",
-        borderRadius: "var(--radius-md)",
-        padding: "1.5rem",
-        display: "flex",
-        flexDirection: "column",
-        gap: "1.25rem"
-      }}>
+      <div
+        style={{
+          background: "#faf7f0",
+          border: "2.5px solid #000000",
+          boxShadow: "3px 3px 0px #000000",
+          borderRadius: "6px",
+          padding: "1.5rem",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1.25rem"
+        }}
+      >
         {/* Row 1: DNA Level Transformation */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
           <div style={{ flex: 1, minWidth: "280px" }}>
-            <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", display: "block", marginBottom: "0.5rem" }}>
-              DNA Level (Local Window ±10 bp, Position {position}):
+            <span style={{ fontSize: "0.78rem", color: "#000000", fontWeight: 800, textTransform: "uppercase", display: "block", marginBottom: "0.5rem" }}>
+              DNA Level (Local Window &plusmn;10 bp, Position {position}):
             </span>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.25rem", overflowX: "auto", padding: "0.5rem 0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", overflowX: "auto", padding: "0.5rem 0" }}>
               {local_window.original_window.split("").map((nt, idx) => {
                 const isTarget = idx === local_window.highlight_offset;
                 const showMutated = currentStage >= 3 && isTarget;
@@ -227,14 +237,11 @@ export const MutationPipeline: React.FC<MutationPipelineProps> = ({
                     key={idx}
                     className={`nt-chip nt-${displayNt.toLowerCase()} ${
                       isTarget && currentStage >= 3
-                        ? "nt-highlight-mut anim-flip"
+                        ? "nt-highlight-mut"
                         : isTarget && currentStage >= 2
                         ? "nt-highlight-orig"
                         : ""
                     }`}
-                    style={{
-                      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-                    }}
                   >
                     {displayNt}
                   </div>
@@ -244,30 +251,33 @@ export const MutationPipeline: React.FC<MutationPipelineProps> = ({
           </div>
 
           {/* DNA Change Summary Chip */}
-          <div style={{
-            background: "rgba(255, 255, 255, 0.03)",
-            border: "1px solid var(--border-subtle)",
-            borderRadius: "var(--radius-md)",
-            padding: "0.75rem 1.25rem",
-            display: "flex",
-            alignItems: "center",
-            gap: "1rem"
-          }}>
+          <div
+            style={{
+              background: "#ffffff",
+              border: "2px solid #000000",
+              boxShadow: "2px 2px 0px #000000",
+              borderRadius: "6px",
+              padding: "0.75rem 1.25rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "1rem"
+            }}
+          >
             <div style={{ textAlign: "center" }}>
-              <span style={{ fontSize: "0.7rem", color: "var(--c-original)", display: "block" }}>Ref</span>
-              <span style={{ fontSize: "1.4rem", fontWeight: 800, color: "var(--c-original)" }}>{original_base}</span>
+              <span style={{ fontSize: "0.68rem", color: "#000000", fontWeight: 800, textTransform: "uppercase", display: "block" }}>Ref</span>
+              <span style={{ fontSize: "1.4rem", fontWeight: 800, color: "#00a86b", fontFamily: "var(--font-mono)" }}>{original_base}</span>
             </div>
 
-            <ArrowRight size={20} color={currentStage >= 3 ? "var(--c-mutated)" : "var(--text-dim)"} />
+            <ArrowRight size={22} color={currentStage >= 3 ? "#ff4d00" : "#888888"} />
 
             <div style={{ textAlign: "center" }}>
-              <span style={{ fontSize: "0.7rem", color: currentStage >= 3 ? "var(--c-mutated)" : "var(--text-dim)", display: "block" }}>Mut</span>
-              <span style={{ fontSize: "1.4rem", fontWeight: 800, color: currentStage >= 3 ? "var(--c-mutated)" : "var(--text-dim)" }}>
+              <span style={{ fontSize: "0.68rem", color: currentStage >= 3 ? "#ff4d00" : "#888888", fontWeight: 800, textTransform: "uppercase", display: "block" }}>Mut</span>
+              <span style={{ fontSize: "1.4rem", fontWeight: 800, color: currentStage >= 3 ? "#ff4d00" : "#888888", fontFamily: "var(--font-mono)" }}>
                 {currentStage >= 3 ? new_base : "?"}
               </span>
             </div>
 
-            <div style={{ borderLeft: "1px solid rgba(255,255,255,0.1)", paddingLeft: "0.75rem", fontSize: "0.75rem", color: "var(--text-muted)" }}>
+            <div style={{ borderLeft: "2px solid #000000", paddingLeft: "0.85rem", fontSize: "0.75rem", color: "#222222", fontWeight: 600 }}>
               <div>Pos: <strong>{position}</strong></div>
               <div>Type: <strong>{transition_transversion}</strong></div>
             </div>
@@ -275,62 +285,74 @@ export const MutationPipeline: React.FC<MutationPipelineProps> = ({
         </div>
 
         {/* Transmission Flow Beam (Stage 4 & 5) */}
-        <div style={{
-          height: "24px",
-          position: "relative",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          overflow: "hidden"
-        }}>
-          <div style={{
-            width: "100%",
-            height: "2px",
-            background: currentStage >= 5
-              ? "linear-gradient(90deg, transparent, #00f2fe, transparent)"
-              : "rgba(255, 255, 255, 0.05)",
-            boxShadow: currentStage >= 5 ? "0 0 10px #00f2fe" : "none",
-            transition: "all 0.5s ease"
-          }} />
+        <div
+          style={{
+            height: "28px",
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden"
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              height: "3px",
+              background: currentStage >= 5 ? "#00f0ff" : "#e0e0e0",
+              border: "1px solid #000000",
+              transition: "all 0.4s ease"
+            }}
+          />
           {currentStage >= 5 && (
-            <span className="badge badge-cyan" style={{ position: "absolute", fontSize: "0.65rem" }}>
+            <span
+              className="badge badge-cyan"
+              style={{
+                position: "absolute",
+                fontSize: "0.68rem",
+                padding: "0.2rem 0.6rem"
+              }}
+            >
               Information Flowing to Ribosomal Translation
             </span>
           )}
         </div>
 
         {/* Row 2: Codon & Amino Acid Translation (Stages 4, 6, 7) */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.25rem" }}>
           {/* Codon Analysis Panel */}
-          <div style={{
-            background: currentStage >= 4 ? "rgba(239, 68, 68, 0.08)" : "rgba(255, 255, 255, 0.02)",
-            border: currentStage >= 4 ? "1px solid rgba(239, 68, 68, 0.3)" : "1px solid var(--border-subtle)",
-            borderRadius: "var(--radius-md)",
-            padding: "1rem",
-            transition: "all 0.3s ease"
-          }}>
+          <div
+            style={{
+              background: currentStage >= 4 ? "#fff5e6" : "#ffffff",
+              border: "2px solid #000000",
+              boxShadow: "2px 2px 0px #000000",
+              borderRadius: "6px",
+              padding: "1rem",
+              transition: "all 0.2s ease"
+            }}
+          >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-              <span style={{ fontSize: "0.75rem", fontWeight: 600, color: currentStage >= 4 ? "var(--c-mutated)" : "var(--text-muted)" }}>
+              <span style={{ fontSize: "0.78rem", fontWeight: 800, color: "#000000", textTransform: "uppercase" }}>
                 Codon #{codon.codon_index} Triplet
               </span>
-              <span className="badge badge-amber" style={{ fontSize: "0.6rem" }}>
+              <span className="badge badge-yellow" style={{ fontSize: "0.62rem" }}>
                 Pos {codon.position_in_codon} of 3
               </span>
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", justifyContent: "center", margin: "0.5rem 0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", justifyContent: "center", margin: "0.65rem 0" }}>
               <div style={{ textAlign: "center" }}>
-                <span style={{ fontSize: "0.7rem", color: "var(--c-original)", display: "block" }}>Original</span>
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: "1.25rem", fontWeight: 700, color: "var(--c-original)" }}>
+                <span style={{ fontSize: "0.68rem", color: "#555555", fontWeight: 700, textTransform: "uppercase", display: "block" }}>Original</span>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: "1.35rem", fontWeight: 800, color: "#00a86b" }}>
                   {codon.original_codon}
                 </span>
               </div>
 
-              <ArrowRight size={18} color={currentStage >= 4 ? "var(--c-mutated)" : "var(--text-dim)"} />
+              <ArrowRight size={20} color={currentStage >= 4 ? "#ff4d00" : "#888888"} />
 
               <div style={{ textAlign: "center" }}>
-                <span style={{ fontSize: "0.7rem", color: currentStage >= 4 ? "var(--c-mutated)" : "var(--text-dim)", display: "block" }}>Modified</span>
-                <span className={currentStage >= 4 ? "anim-pulse" : ""} style={{ fontFamily: "var(--font-mono)", fontSize: "1.25rem", fontWeight: 700, color: currentStage >= 4 ? "var(--c-mutated)" : "var(--text-dim)" }}>
+                <span style={{ fontSize: "0.68rem", color: currentStage >= 4 ? "#ff4d00" : "#888888", fontWeight: 700, textTransform: "uppercase", display: "block" }}>Modified</span>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: "1.35rem", fontWeight: 800, color: currentStage >= 4 ? "#ff4d00" : "#888888" }}>
                   {currentStage >= 4 ? codon.modified_codon : "---"}
                 </span>
               </div>
@@ -338,37 +360,43 @@ export const MutationPipeline: React.FC<MutationPipelineProps> = ({
           </div>
 
           {/* Amino Acid Residue Translation Panel */}
-          <div style={{
-            background: currentStage >= 6 ? "rgba(168, 85, 247, 0.08)" : "rgba(255, 255, 255, 0.02)",
-            border: currentStage >= 6 ? "1px solid rgba(168, 85, 247, 0.3)" : "1px solid var(--border-subtle)",
-            borderRadius: "var(--radius-md)",
-            padding: "1rem",
-            transition: "all 0.3s ease"
-          }}>
+          <div
+            style={{
+              background: currentStage >= 6 ? "#fef9c3" : "#ffffff",
+              border: "2px solid #000000",
+              boxShadow: "2px 2px 0px #000000",
+              borderRadius: "6px",
+              padding: "1rem",
+              transition: "all 0.2s ease"
+            }}
+          >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-              <span style={{ fontSize: "0.75rem", fontWeight: 600, color: currentStage >= 6 ? "var(--c-ml)" : "var(--text-muted)" }}>
+              <span style={{ fontSize: "0.78rem", fontWeight: 800, color: "#000000", textTransform: "uppercase" }}>
                 Peptide Residue #{amino_acid.residue_index}
               </span>
-              <span className={`badge ${
-                classification === "synonymous" ? "badge-green" : classification === "missense" ? "badge-amber" : "badge-red"
-              }`} style={{ fontSize: "0.6rem" }}>
+              <span
+                className={`badge ${
+                  classification === "synonymous" ? "badge-green" : classification === "missense" ? "badge-amber" : "badge-red"
+                }`}
+                style={{ fontSize: "0.62rem" }}
+              >
                 {classification}
               </span>
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem", justifyContent: "center", margin: "0.5rem 0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", justifyContent: "center", margin: "0.65rem 0" }}>
               <div style={{ textAlign: "center" }}>
-                <span style={{ fontSize: "0.7rem", color: "var(--c-original)", display: "block" }}>Ref Residue</span>
-                <span style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--c-original)" }}>
+                <span style={{ fontSize: "0.68rem", color: "#555555", fontWeight: 700, textTransform: "uppercase", display: "block" }}>Ref Residue</span>
+                <span style={{ fontSize: "1.35rem", fontWeight: 800, color: "#00a86b" }}>
                   {amino_acid.original_aa_name}
                 </span>
               </div>
 
-              <ArrowRight size={18} color={currentStage >= 6 ? "var(--c-mutated)" : "var(--text-dim)"} />
+              <ArrowRight size={20} color={currentStage >= 6 ? "#ff4d00" : "#888888"} />
 
               <div style={{ textAlign: "center" }}>
-                <span style={{ fontSize: "0.7rem", color: currentStage >= 6 ? "var(--c-mutated)" : "var(--text-dim)", display: "block" }}>Mut Residue</span>
-                <span style={{ fontSize: "1.25rem", fontWeight: 700, color: currentStage >= 6 ? "var(--c-mutated)" : "var(--text-dim)" }}>
+                <span style={{ fontSize: "0.68rem", color: currentStage >= 6 ? "#ff4d00" : "#888888", fontWeight: 700, textTransform: "uppercase", display: "block" }}>Mut Residue</span>
+                <span style={{ fontSize: "1.35rem", fontWeight: 800, color: currentStage >= 6 ? "#ff4d00" : "#888888" }}>
                   {currentStage >= 6 ? amino_acid.modified_aa_name : "Pending"}
                 </span>
               </div>
@@ -378,31 +406,34 @@ export const MutationPipeline: React.FC<MutationPipelineProps> = ({
 
         {/* Row 3: Consequence Banner (Stage 8) */}
         {currentStage >= 8 && (
-          <div style={{
-            background: "rgba(0, 242, 254, 0.05)",
-            border: "1px solid rgba(0, 242, 254, 0.2)",
-            borderRadius: "var(--radius-md)",
-            padding: "0.85rem 1.25rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: "0.75rem"
-          }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-              <CheckCircle2 size={18} color="var(--c-flow)" />
+          <div
+            style={{
+              background: "#ffffff",
+              border: "2px solid #000000",
+              boxShadow: "2.5px 2.5px 0px #000000",
+              borderRadius: "6px",
+              padding: "0.85rem 1.25rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "0.75rem"
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
+              <CheckCircle2 size={20} color="#00e599" />
               <div>
-                <span style={{ fontWeight: 700, fontSize: "0.9rem", color: "#fff" }}>
-                  Pipeline Completed: {classification.toUpperCase()} CONSEQENCE
+                <span style={{ fontWeight: 800, fontSize: "0.95rem", color: "#000000", textTransform: "uppercase" }}>
+                  Pipeline Completed: {classification.toUpperCase()} CONSEQUENCE
                 </span>
-                <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.1rem" }}>
+                <p style={{ fontSize: "0.78rem", color: "var(--text-secondary)", fontWeight: 600, marginTop: "0.15rem" }}>
                   {classification_description}
                 </p>
               </div>
             </div>
 
             <div style={{ display: "flex", gap: "0.5rem" }}>
-              <span className="badge badge-purple">ML Inferred</span>
+              <span className="badge badge-yellow">ML Inferred</span>
               <span className="badge badge-cyan">Evidence Linked</span>
             </div>
           </div>

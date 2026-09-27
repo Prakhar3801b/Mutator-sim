@@ -15,27 +15,55 @@ export const Header: React.FC<HeaderProps> = ({
   onReset
 }) => {
   return (
-    <header className="glass-panel" style={{ padding: "1rem 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
+    <header
+      className="neo-card"
+      style={{
+        padding: "1rem 1.5rem",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        flexWrap: "wrap",
+        gap: "1rem",
+        background: "#ffffff",
+        border: "3px solid #000000",
+        boxShadow: "4px 4px 0px #000000"
+      }}
+    >
       <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <div style={{
-          width: "44px",
-          height: "44px",
-          borderRadius: "12px",
-          background: "linear-gradient(135deg, #00f2fe, #4facfe)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          boxShadow: "0 0 15px rgba(0, 242, 254, 0.4)"
-        }}>
-          <Dna size={26} color="#070a14" />
+        <div
+          style={{
+            width: "44px",
+            height: "44px",
+            borderRadius: "6px",
+            background: "#ffe600",
+            border: "2.5px solid #000000",
+            boxShadow: "2px 2px 0px #000000",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <Dna size={26} color="#000000" />
         </div>
         <div>
-          <h1 style={{ fontSize: "1.35rem", fontWeight: 700, letterSpacing: "-0.02em", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <h1
+            style={{
+              fontSize: "1.35rem",
+              fontWeight: 800,
+              letterSpacing: "-0.02em",
+              fontFamily: "var(--font-display)",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.6rem"
+            }}
+          >
             Genetic Mutation Simulator
-            <span className="badge badge-purple" style={{ fontSize: "0.65rem" }}>v1.1 Research</span>
+            <span className="badge badge-yellow" style={{ fontSize: "0.68rem" }}>
+              v1.1 Research
+            </span>
           </h1>
-          <p style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
-            In-Silico DNA → Codon → Protein Variant Impact Simulation & Evidence Explorer
+          <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)", fontWeight: 600 }}>
+            In-Silico DNA &rarr; Codon &rarr; Protein Variant Impact Simulation & Evidence Explorer
           </p>
         </div>
       </div>
@@ -43,11 +71,11 @@ export const Header: React.FC<HeaderProps> = ({
       <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
         <div className="badge badge-cyan" title="Entrez API Key configured for 10 req/s">
           <Zap size={13} />
-          NCBI API Key Active
+          NCBI API Active
         </div>
         <div className="badge badge-green" title="Strict separation of in-silico prediction from clinical claims">
           <ShieldCheck size={13} />
-          In-Silico Research Mode
+          In-Silico Mode
         </div>
 
         <button

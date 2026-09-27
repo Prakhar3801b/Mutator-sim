@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { Sparkles, ArrowRight, Dna } from "lucide-react";
 import { FeaturedGene } from "@/types";
 
 interface FeaturedGenesProps {
@@ -18,23 +18,48 @@ export const FeaturedGenes: React.FC<FeaturedGenesProps> = ({
   if (!genes || genes.length === 0) return null;
 
   return (
-    <div className="glass-panel" style={{ padding: "1.25rem 1.5rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <Sparkles size={18} color="#00f2fe" />
-          <h2 style={{ fontSize: "1rem", fontWeight: 600 }}>Featured Research Genes</h2>
-          <span className="badge badge-cyan" style={{ fontSize: "0.65rem" }}>1-Click Exploration</span>
+    <div
+      className="neo-card"
+      style={{
+        padding: "1.25rem 1.5rem",
+        background: "#ffffff",
+        border: "3px solid #000000",
+        boxShadow: "5px 5px 0px #000000",
+        borderRadius: "8px"
+      }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+          <div
+            style={{
+              background: "#ffe600",
+              border: "2px solid #000000",
+              boxShadow: "1.5px 1.5px 0px #000000",
+              padding: "0.25rem",
+              borderRadius: "4px"
+            }}
+          >
+            <Sparkles size={16} color="#000000" />
+          </div>
+          <h2 style={{ fontSize: "1.05rem", fontWeight: 800, fontFamily: "var(--font-display)" }}>
+            Featured Research Genes
+          </h2>
+          <span className="badge badge-yellow" style={{ fontSize: "0.65rem" }}>
+            1-Click Exploration
+          </span>
         </div>
-        <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
+        <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)", fontWeight: 600 }}>
           Pre-indexed RefSeq Coding Sequences with benchmark mutations
         </span>
       </div>
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-        gap: "0.75rem"
-      }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gap: "0.85rem"
+        }}
+      >
         {genes.map((g) => {
           const isSelected = selectedGeneId === g.gene_id;
           return (
@@ -42,48 +67,82 @@ export const FeaturedGenes: React.FC<FeaturedGenesProps> = ({
               key={g.gene_id}
               onClick={() => onSelectGene(g)}
               style={{
-                background: isSelected ? "rgba(0, 242, 254, 0.12)" : "rgba(255, 255, 255, 0.03)",
-                border: isSelected ? "1px solid #00f2fe" : "1px solid var(--border-subtle)",
-                borderRadius: "var(--radius-md)",
+                background: isSelected ? "#ffe600" : "#ffffff",
+                border: "2.5px solid #000000",
+                boxShadow: isSelected ? "4px 4px 0px #000000" : "2.5px 2.5px 0px #000000",
+                transform: isSelected ? "translate(-2px, -2px)" : "none",
+                borderRadius: "6px",
                 padding: "0.85rem 1rem",
                 cursor: "pointer",
-                transition: "all 0.2s ease",
+                transition: "all 0.12s ease",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between"
               }}
               onMouseEnter={(e) => {
                 if (!isSelected) {
-                  e.currentTarget.style.borderColor = "rgba(0, 242, 254, 0.4)";
-                  e.currentTarget.style.background = "rgba(255, 255, 255, 0.06)";
+                  e.currentTarget.style.background = "#fffce6";
+                  e.currentTarget.style.transform = "translate(-2px, -2px)";
+                  e.currentTarget.style.boxShadow = "4px 4px 0px #000000";
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isSelected) {
-                  e.currentTarget.style.borderColor = "var(--border-subtle)";
-                  e.currentTarget.style.background = "rgba(255, 255, 255, 0.03)";
+                  e.currentTarget.style.background = "#ffffff";
+                  e.currentTarget.style.transform = "none";
+                  e.currentTarget.style.boxShadow = "2.5px 2.5px 0px #000000";
                 }
               }}
             >
               <div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.25rem" }}>
-                  <span style={{ fontWeight: 700, fontSize: "1.05rem", color: isSelected ? "#00f2fe" : "var(--text-main)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.3rem" }}>
+                  <span style={{ fontWeight: 800, fontSize: "1.15rem", fontFamily: "var(--font-mono)", color: "#000000" }}>
                     {g.symbol}
                   </span>
-                  <span className="badge badge-purple" style={{ fontSize: "0.6rem" }}>
+                  <span
+                    style={{
+                      fontSize: "0.65rem",
+                      fontWeight: 800,
+                      background: isSelected ? "#ffffff" : "#00f0ff",
+                      color: "#000000",
+                      border: "1.5px solid #000000",
+                      boxShadow: "1px 1px 0px #000000",
+                      padding: "0.1rem 0.4rem",
+                      borderRadius: "3px"
+                    }}
+                  >
                     Chr {g.chromosome}
                   </span>
                 </div>
-                <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "0.5rem" }}>
+                <div style={{ fontSize: "0.75rem", color: "#333333", fontWeight: 600, marginBottom: "0.6rem" }}>
                   {g.name}
                 </div>
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "0.5rem", paddingTop: "0.5rem", borderTop: "1px solid rgba(255, 255, 255, 0.05)" }}>
-                <span style={{ fontSize: "0.7rem", color: "var(--text-dim)" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginTop: "0.5rem",
+                  paddingTop: "0.5rem",
+                  borderTop: "1.5px dashed #000000"
+                }}
+              >
+                <span style={{ fontSize: "0.7rem", color: "#555555", fontWeight: 700 }}>
                   {g.organism}
                 </span>
-                <span style={{ display: "flex", alignItems: "center", gap: "0.2rem", fontSize: "0.75rem", color: "#00f2fe", fontWeight: 600 }}>
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.2rem",
+                    fontSize: "0.75rem",
+                    color: "#000000",
+                    fontWeight: 800,
+                    textTransform: "uppercase"
+                  }}
+                >
                   {isSelected ? "Active" : "Explore"}
                   <ArrowRight size={13} />
                 </span>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Box, Eye, AlertTriangle, RotateCw, Sparkles, Check } from "lucide-react";
+import { Box, Eye, RotateCw, Sparkles, Check } from "lucide-react";
 
 interface Structure3DViewerProps {
   geneSymbol: string;
@@ -53,20 +53,33 @@ export const Structure3DViewer: React.FC<Structure3DViewerProps> = ({
       const cy = canvas.height / 2;
       const r = 90;
 
-      // Draw background glow
-      const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, 180);
-      grad.addColorStop(0, "rgba(0, 242, 254, 0.08)");
-      grad.addColorStop(1, "transparent");
-      ctx.fillStyle = grad;
+      // Draw technical grid inside canvas
+      ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = "rgba(0, 0, 0, 0.06)";
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 25) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 25) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
 
       // Render stylized 3D protein helix ribbon
       const totalPoints = 60;
       const rotY = (rotation.y + autoAngle) * (Math.PI / 180);
       const rotX = rotation.x * (Math.PI / 180);
 
-      ctx.lineWidth = 4;
-      ctx.strokeStyle = "rgba(79, 172, 254, 0.6)";
+      // Black outline for ribbon
+      ctx.lineWidth = 8;
+      ctx.strokeStyle = "#000000";
       ctx.beginPath();
 
       let mutX = cx;
@@ -93,7 +106,6 @@ export const Structure3DViewer: React.FC<Structure3DViewerProps> = ({
           ctx.lineTo(px, py);
         }
 
-        // Highlight mutated residue near center
         if (i === Math.floor(totalPoints / 2)) {
           mutX = px;
           mutY = py;
@@ -101,23 +113,29 @@ export const Structure3DViewer: React.FC<Structure3DViewerProps> = ({
       }
       ctx.stroke();
 
-      // Render mutated residue sphere
+      // Core ribbon color: Electric Cyan
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = "#00f0ff";
+      ctx.stroke();
+
+      // Render mutated residue sphere with Neo-Brutalist thick black border
       ctx.save();
       ctx.beginPath();
-      ctx.arc(mutX, mutY, 12, 0, Math.PI * 2);
-      ctx.fillStyle = "#ef4444";
-      ctx.shadowColor = "#ef4444";
-      ctx.shadowBlur = 18;
+      ctx.arc(mutX, mutY, 15, 0, Math.PI * 2);
+      ctx.fillStyle = "#ff4d00";
       ctx.fill();
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = "#000000";
+      ctx.stroke();
 
-      ctx.fillStyle = "#fff";
-      ctx.font = "bold 9px sans-serif";
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "800 10px 'JetBrains Mono', monospace";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText(modifiedAa || "Mut", mutX, mutY);
       ctx.restore();
 
-      autoAngle += 0.4;
+      autoAngle += 0.45;
       animId = requestAnimationFrame(render);
     };
 
@@ -147,16 +165,35 @@ export const Structure3DViewer: React.FC<Structure3DViewerProps> = ({
   const handleMouseUp = () => setIsDragging(false);
 
   return (
-    <div className="glass-panel">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+    <div
+      className="neo-card"
+      style={{
+        background: "#ffffff",
+        border: "3px solid #000000",
+        boxShadow: "5px 5px 0px #000000",
+        borderRadius: "8px",
+        padding: "1.5rem"
+      }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Box size={18} color="var(--c-flow)" />
-            <h3 style={{ fontSize: "1rem", fontWeight: 700 }}>
+            <div
+              style={{
+                background: "#ffe600",
+                border: "2px solid #000000",
+                boxShadow: "1.5px 1.5px 0px #000000",
+                padding: "0.25rem",
+                borderRadius: "4px"
+              }}
+            >
+              <Box size={18} color="#000000" />
+            </div>
+            <h3 style={{ fontSize: "1.05rem", fontWeight: 800, fontFamily: "var(--font-display)" }}>
               Protein Structure Viewer ({geneSymbol})
             </h3>
           </div>
-          <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.15rem" }}>
+          <p style={{ fontSize: "0.78rem", color: "var(--text-secondary)", fontWeight: 600, marginTop: "0.15rem" }}>
             On-demand structure visualization with residue highlight (Residue #{residueIndex || 1})
           </p>
         </div>
@@ -165,7 +202,7 @@ export const Structure3DViewer: React.FC<Structure3DViewerProps> = ({
           <button
             onClick={() => setViewMode(viewMode === "3d" ? "2d" : "3d")}
             className="btn btn-secondary"
-            style={{ fontSize: "0.75rem", padding: "0.35rem 0.7rem" }}
+            style={{ fontSize: "0.75rem", padding: "0.35rem 0.75rem" }}
           >
             {viewMode === "3d" ? "Switch to 2D Map" : "Switch to 3D View"}
           </button>
@@ -173,23 +210,35 @@ export const Structure3DViewer: React.FC<Structure3DViewerProps> = ({
       </div>
 
       {!isLoaded ? (
-        <div style={{
-          padding: "2.5rem 1.5rem",
-          textAlign: "center",
-          background: "rgba(255, 255, 255, 0.02)",
-          borderRadius: "var(--radius-md)",
-          border: "1px dashed var(--border-subtle)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "0.75rem"
-        }}>
-          <Sparkles size={28} color="var(--c-flow)" />
+        <div
+          style={{
+            padding: "2.5rem 1.5rem",
+            textAlign: "center",
+            background: "#faf7f0",
+            borderRadius: "6px",
+            border: "2px dashed #000000",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "0.75rem"
+          }}
+        >
+          <div
+            style={{
+              background: "#00f0ff",
+              border: "2px solid #000000",
+              boxShadow: "2px 2px 0px #000000",
+              padding: "0.5rem",
+              borderRadius: "6px"
+            }}
+          >
+            <Sparkles size={24} color="#000000" />
+          </div>
           <div style={{ maxWidth: "420px" }}>
-            <h4 style={{ fontSize: "0.95rem", fontWeight: 600, color: "#fff" }}>
+            <h4 style={{ fontSize: "0.95rem", fontWeight: 800, color: "#000000" }}>
               On-Demand Molecular Structure
             </h4>
-            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.25rem" }}>
+            <p style={{ fontSize: "0.78rem", color: "#444444", fontWeight: 600, marginTop: "0.25rem" }}>
               To ensure smooth performance across all mobile and low-power devices, 3D rendering is loaded only on request.
             </p>
           </div>
@@ -202,8 +251,8 @@ export const Structure3DViewer: React.FC<Structure3DViewerProps> = ({
             <Eye size={15} /> Load Structure Viewer
           </button>
 
-          <div style={{ fontSize: "0.7rem", color: "var(--text-dim)", display: "flex", alignItems: "center", gap: "0.3rem" }}>
-            <Check size={12} color="var(--c-original)" />
+          <div style={{ fontSize: "0.72rem", color: "#555555", fontWeight: 700, display: "flex", alignItems: "center", gap: "0.3rem" }}>
+            <Check size={13} color="#00e599" />
             WebGL Compatible & Fallback Protected
           </div>
         </div>
@@ -217,9 +266,10 @@ export const Structure3DViewer: React.FC<Structure3DViewerProps> = ({
               onMouseLeave={handleMouseUp}
               style={{
                 position: "relative",
-                background: "rgba(0, 0, 0, 0.4)",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid var(--border-subtle)",
+                background: "#ffffff",
+                borderRadius: "6px",
+                border: "2.5px solid #000000",
+                boxShadow: "3px 3px 0px #000000",
                 height: "260px",
                 overflow: "hidden",
                 cursor: isDragging ? "grabbing" : "grab"
@@ -232,14 +282,28 @@ export const Structure3DViewer: React.FC<Structure3DViewerProps> = ({
                 style={{ width: "100%", height: "100%", display: "block" }}
               />
 
-              <div style={{ position: "absolute", bottom: "0.75rem", left: "0.75rem", fontSize: "0.7rem", color: "var(--text-muted)", background: "rgba(0,0,0,0.6)", padding: "0.25rem 0.5rem", borderRadius: "4px" }}>
-                🔴 Red sphere: Mutated residue #{residueIndex} ({originalAa} → {modifiedAa}) • Drag to rotate
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "0.75rem",
+                  left: "0.75rem",
+                  fontSize: "0.72rem",
+                  fontWeight: 700,
+                  color: "#000000",
+                  background: "#ffffff",
+                  border: "1.5px solid #000000",
+                  boxShadow: "1.5px 1.5px 0px #000000",
+                  padding: "0.25rem 0.6rem",
+                  borderRadius: "3px"
+                }}
+              >
+                🔴 Signal Coral: Mutated residue #{residueIndex} ({originalAa} &rarr; {modifiedAa}) &bull; Drag to rotate
               </div>
 
               <button
                 onClick={() => setRotation({ x: 15, y: 35 })}
                 className="btn btn-secondary"
-                style={{ position: "absolute", top: "0.75rem", right: "0.75rem", fontSize: "0.7rem", padding: "0.3rem 0.6rem" }}
+                style={{ position: "absolute", top: "0.75rem", right: "0.75rem", fontSize: "0.72rem", padding: "0.3rem 0.65rem" }}
                 title="Reset angle"
               >
                 <RotateCw size={12} /> Reset
@@ -247,42 +311,51 @@ export const Structure3DViewer: React.FC<Structure3DViewerProps> = ({
             </div>
           ) : (
             /* 2D Topological Residue Map Fallback */
-            <div style={{
-              background: "rgba(0, 0, 0, 0.3)",
-              borderRadius: "var(--radius-md)",
-              border: "1px solid var(--border-subtle)",
-              padding: "1.25rem"
-            }}>
-              <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--text-main)", marginBottom: "0.5rem" }}>
+            <div
+              style={{
+                background: "#faf7f0",
+                borderRadius: "6px",
+                border: "2.5px solid #000000",
+                boxShadow: "3px 3px 0px #000000",
+                padding: "1.25rem"
+              }}
+            >
+              <div style={{ fontSize: "0.85rem", fontWeight: 800, color: "#000000", marginBottom: "0.75rem", textTransform: "uppercase" }}>
                 2D Domain & Residue Linear Topology
               </div>
-              <div style={{
-                position: "relative",
-                height: "40px",
-                background: "linear-gradient(90deg, #1e293b, #334155, #1e293b)",
-                borderRadius: "var(--radius-sm)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}>
-                <div style={{
-                  position: "absolute",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  background: "#ef4444",
-                  color: "#fff",
-                  padding: "0.2rem 0.6rem",
+              <div
+                style={{
+                  position: "relative",
+                  height: "46px",
+                  background: "#ffffff",
+                  border: "2px solid #000000",
                   borderRadius: "4px",
-                  fontSize: "0.75rem",
-                  fontWeight: 700,
-                  boxShadow: "0 0 12px rgba(239, 68, 68, 0.7)"
-                }}>
-                  Residue #{residueIndex}: {originalAa} → {modifiedAa}
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    background: "#ff4d00",
+                    color: "#ffffff",
+                    border: "2px solid #000000",
+                    boxShadow: "2px 2px 0px #000000",
+                    padding: "0.25rem 0.75rem",
+                    borderRadius: "4px",
+                    fontSize: "0.78rem",
+                    fontWeight: 800
+                  }}
+                >
+                  Residue #{residueIndex}: {originalAa} &rarr; {modifiedAa}
                 </div>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.7rem", color: "var(--text-muted)", marginTop: "0.5rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.72rem", color: "#444444", fontWeight: 700, marginTop: "0.6rem" }}>
                 <span>N-Terminus (1)</span>
-                <span>Active Domain Region</span>
+                <span>Active Catalytic Domain Region</span>
                 <span>C-Terminus</span>
               </div>
             </div>

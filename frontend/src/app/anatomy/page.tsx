@@ -105,7 +105,7 @@ export default function AnatomyPage() {
   ) || anatomyData?.affected_organs[0];
 
   return (
-    <div className={`main-container ${reducedMotion ? "reduced-motion" : ""}`} style={{ gap: "1.25rem" }}>
+    <div className={`main-container ${reducedMotion ? "reduced-motion" : ""}`} style={{ gap: "1.5rem", padding: "1.75rem 2.5rem" }}>
       {/* 1. Global Navigation Bar */}
       <Navbar
         reducedMotion={reducedMotion}
@@ -113,27 +113,51 @@ export default function AnatomyPage() {
         activeGeneSymbol={anatomyData?.gene_symbol || selectedPreset.symbol}
       />
 
-      {/* 2. Top Variant Selector & Medical Diagnostic Bar (matching Reference 1 & 3 header) */}
-      <div className="glass-panel" style={{ padding: "1.25rem 1.5rem" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem", marginBottom: "1rem" }}>
+      {/* 2. Top Variant Selector & Medical Diagnostic Bar */}
+      <div
+        className="neo-card"
+        style={{
+          padding: "1.5rem 1.75rem",
+          background: "#ffffff",
+          border: "3px solid #000000",
+          boxShadow: "5px 5px 0px #000000",
+          borderRadius: "8px"
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem", marginBottom: "1.25rem" }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-              <Activity size={20} color="#06b6d4" />
-              <h1 style={{ fontSize: "1.25rem", fontWeight: 700, letterSpacing: "-0.02em" }}>
+              <div
+                style={{
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "6px",
+                  background: "#ffe600",
+                  border: "2px solid #000000",
+                  boxShadow: "1.5px 1.5px 0px #000000",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#000000"
+                }}
+              >
+                <Activity size={20} />
+              </div>
+              <h1 style={{ fontFamily: "var(--font-display)", fontSize: "1.45rem", fontWeight: 800, letterSpacing: "-0.03em" }}>
                 Human Body Anatomical Phenotype Explorer
               </h1>
-              <span className="badge badge-purple" style={{ fontSize: "0.65rem" }}>
+              <span className="badge badge-yellow" style={{ fontSize: "0.65rem" }}>
                 AI External Inference
               </span>
             </div>
-            <p style={{ fontSize: "0.825rem", color: "var(--text-muted)", marginTop: "0.2rem" }}>
+            <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", fontWeight: 600, marginTop: "0.35rem" }}>
               Multi-organ physiological mapping of DNA sequence mutations powered by external AI APIs & clinical pathology databases
             </p>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <span style={{ fontSize: "0.75rem", color: "var(--text-dim)" }}>Engine Provider:</span>
-            <span className="badge badge-cyan" style={{ fontSize: "0.7rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+            <span style={{ fontSize: "0.78rem", color: "var(--text-secondary)", fontWeight: 700 }}>Engine:</span>
+            <span className="badge badge-cyan" style={{ fontSize: "0.72rem" }}>
               {anatomyData?.ai_provider || "AI Clinical Engine"}
             </span>
           </div>
@@ -141,7 +165,7 @@ export default function AnatomyPage() {
 
         {/* Preset Mutation Selector Pills */}
         <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap", alignItems: "center" }}>
-          <span style={{ fontSize: "0.8rem", color: "var(--text-secondary)", fontWeight: 600 }}>
+          <span style={{ fontSize: "0.8rem", color: "#000000", fontWeight: 800, textTransform: "uppercase" }}>
             Curated Benchmarks:
           </span>
           {PRESET_MUTATIONS.map((preset) => {
@@ -155,66 +179,95 @@ export default function AnatomyPage() {
                   setCustomVariant(preset.hgvs);
                 }}
                 style={{
-                  background: isSelected ? "linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(59, 130, 246, 0.25))" : "rgba(255, 255, 255, 0.04)",
-                  border: isSelected ? "1px solid #06b6d4" : "1px solid var(--border-subtle)",
-                  color: isSelected ? "#38bdf8" : "var(--text-muted)",
-                  padding: "0.4rem 0.85rem",
-                  borderRadius: "var(--radius-full)",
-                  fontSize: "0.78rem",
-                  fontWeight: 600,
+                  background: isSelected ? "#ffe600" : "#ffffff",
+                  border: "2px solid #000000",
+                  color: "#000000",
+                  padding: "0.45rem 1rem",
+                  borderRadius: "4px",
+                  fontSize: "0.8rem",
+                  fontWeight: 800,
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
-                  gap: "0.35rem",
-                  transition: "all 0.2s ease"
+                  gap: "0.4rem",
+                  boxShadow: isSelected ? "3px 3px 0px #000000" : "1.5px 1.5px 0px #000000",
+                  transform: isSelected ? "translate(-1px, -1px)" : "none",
+                  transition: "all 0.12s ease"
                 }}
               >
                 <span>{preset.symbol}</span>
-                <span style={{ opacity: 0.7, fontSize: "0.7rem" }}>({preset.hgvs})</span>
+                <span style={{ opacity: 0.8, fontSize: "0.72rem", fontFamily: "var(--font-mono)" }}>({preset.hgvs})</span>
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* 3. Main 3-Column Diagnostic Layout matching Reference 3 */}
+      {/* 3. Main 3-Column Diagnostic Layout */}
       {isLoading ? (
-        <div className="glass-panel" style={{ textAlign: "center", padding: "4rem" }}>
-          <Loader2 size={36} className="anim-spin" style={{ color: "#06b6d4", margin: "0 auto 1rem" }} />
-          <div style={{ fontSize: "1.05rem", fontWeight: 600 }}>
+        <div
+          className="neo-card"
+          style={{
+            textAlign: "center",
+            padding: "4rem",
+            background: "#ffffff",
+            border: "3px solid #000000",
+            boxShadow: "5px 5px 0px #000000",
+            borderRadius: "8px"
+          }}
+        >
+          <Loader2 size={36} className="anim-spin" style={{ color: "#000000", margin: "0 auto 1rem" }} />
+          <div style={{ fontFamily: "var(--font-display)", fontSize: "1.2rem", fontWeight: 800 }}>
             Analyzing Whole-Body Anatomical Impact via AI Clinical API...
           </div>
-          <div style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginTop: "0.5rem" }}>
+          <div style={{ fontSize: "0.85rem", color: "var(--text-secondary)", fontWeight: 600, marginTop: "0.5rem" }}>
             Querying physiological consequences, organ vulnerability, and cellular pathways
           </div>
         </div>
       ) : anatomyData ? (
         <div className="anatomy-container">
-          {/* Column 1: Diagnostic Results & Clinical Screening Alerts (Reference 3 Left Sidebar) */}
+          {/* Column 1: Diagnostic Results & Clinical Screening Alerts */}
           <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
             {/* Condition Banner */}
-            <div className="clinical-card" style={{ borderLeft: "4px solid #06b6d4" }}>
+            <div
+              className="clinical-card"
+              style={{
+                borderLeft: "6px solid #ffe600",
+                background: "#ffffff",
+                border: "2.5px solid #000000",
+                boxShadow: "3px 3px 0px #000000"
+              }}
+            >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
-                <span style={{ fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "#38bdf8", fontWeight: 700 }}>
+                <span style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#000000", fontWeight: 800 }}>
                   Primary Clinical Manifestation
                 </span>
-                <span className="badge badge-purple" style={{ fontSize: "0.6rem" }}>
+                <span className="badge badge-yellow" style={{ fontSize: "0.62rem" }}>
                   {anatomyData.gene_symbol}
                 </span>
               </div>
-              <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text-main)" }}>
+              <div style={{ fontFamily: "var(--font-display)", fontSize: "1.2rem", fontWeight: 800, color: "#000000" }}>
                 {anatomyData.primary_condition}
               </div>
-              <div style={{ fontSize: "0.8rem", color: "var(--text-secondary)", marginTop: "0.5rem", lineHeight: 1.5 }}>
+              <div style={{ fontSize: "0.82rem", color: "var(--text-secondary)", marginTop: "0.5rem", lineHeight: 1.6, fontWeight: 500 }}>
                 {anatomyData.overview_summary}
               </div>
             </div>
 
             {/* Affected Organ Target List */}
-            <div className="glass-panel" style={{ padding: "1.25rem" }}>
+            <div
+              className="neo-card"
+              style={{
+                padding: "1.25rem",
+                background: "#ffffff",
+                border: "2.5px solid #000000",
+                boxShadow: "3px 3px 0px #000000",
+                borderRadius: "6px"
+              }}
+            >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.85rem" }}>
-                <span style={{ fontSize: "0.85rem", fontWeight: 700, display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                  <Layers size={16} color="#38bdf8" />
+                <span style={{ fontSize: "0.85rem", fontWeight: 800, display: "flex", alignItems: "center", gap: "0.4rem", textTransform: "uppercase" }}>
+                  <Layers size={16} color="#000000" />
                   Target Organ Systems
                 </span>
                 <span className="badge badge-cyan" style={{ fontSize: "0.65rem" }}>
@@ -246,10 +299,10 @@ export default function AnatomyPage() {
                       }}
                     >
                       <div>
-                        <div style={{ fontWeight: 600, fontSize: "0.9rem", color: isSelected ? "#38bdf8" : "var(--text-main)" }}>
+                        <div style={{ fontWeight: 800, fontSize: "0.92rem", color: "#000000" }}>
                           {organ.name}
                         </div>
-                        <div style={{ fontSize: "0.72rem", color: "var(--text-dim)" }}>
+                        <div style={{ fontSize: "0.72rem", color: "#444444", fontWeight: 600 }}>
                           {organ.system}
                         </div>
                       </div>
@@ -257,7 +310,7 @@ export default function AnatomyPage() {
                         <span className={`badge ${severityBadge}`} style={{ fontSize: "0.62rem" }}>
                           {organ.severity}
                         </span>
-                        <ChevronRight size={14} color={isSelected ? "#38bdf8" : "var(--text-dim)"} />
+                        <ChevronRight size={15} color="#000000" />
                       </div>
                     </div>
                   );
@@ -266,19 +319,29 @@ export default function AnatomyPage() {
             </div>
 
             {/* Quick Custom Gene Input */}
-            <form onSubmit={handleCustomSubmit} className="glass-panel" style={{ padding: "1.25rem" }}>
-              <div style={{ fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.75rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                <Sparkles size={16} color="#c084fc" />
+            <form
+              onSubmit={handleCustomSubmit}
+              className="neo-card"
+              style={{
+                padding: "1.25rem",
+                background: "#ffffff",
+                border: "2.5px solid #000000",
+                boxShadow: "3px 3px 0px #000000",
+                borderRadius: "6px"
+              }}
+            >
+              <div style={{ fontSize: "0.85rem", fontWeight: 800, marginBottom: "0.75rem", display: "flex", alignItems: "center", gap: "0.4rem", textTransform: "uppercase" }}>
+                <Sparkles size={16} color="#000000" />
                 Query Any Gene / Mutation
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>
                 <input
                   type="text"
                   placeholder="Gene Symbol (e.g. EGFR, BRAF, APOE)"
                   value={customGene}
                   onChange={(e) => setCustomGene(e.target.value)}
                   className="input-control"
-                  style={{ fontSize: "0.8rem", padding: "0.5rem 0.75rem" }}
+                  style={{ fontSize: "0.8rem", padding: "0.55rem 0.85rem", fontWeight: 700 }}
                 />
                 <input
                   type="text"
@@ -286,12 +349,12 @@ export default function AnatomyPage() {
                   value={customVariant}
                   onChange={(e) => setCustomVariant(e.target.value)}
                   className="input-control"
-                  style={{ fontSize: "0.8rem", padding: "0.5rem 0.75rem" }}
+                  style={{ fontSize: "0.8rem", padding: "0.55rem 0.85rem", fontWeight: 700 }}
                 />
                 <button
                   type="submit"
                   className="btn btn-primary"
-                  style={{ fontSize: "0.8rem", padding: "0.5rem" }}
+                  style={{ fontSize: "0.8rem", padding: "0.65rem" }}
                 >
                   Run External AI Organ Deduction
                 </button>
@@ -299,24 +362,33 @@ export default function AnatomyPage() {
             </form>
           </div>
 
-          {/* Column 2: Vector Anatomical Human Body Silhouette (Reference 3 Centerpiece) */}
+          {/* Column 2: Vector Anatomical Human Body Silhouette */}
           <HumanBodyCanvas
             affectedOrgans={anatomyData.affected_organs}
             selectedOrganId={selectedOrganId}
             onSelectOrgan={(id) => setSelectedOrganId(id)}
           />
 
-          {/* Column 3: Organ Deep Dive & Cellular Pathways (Reference 3 Right Sidebar) */}
+          {/* Column 3: Organ Deep Dive & Cellular Pathways */}
           {selectedOrgan ? (
             <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
               {/* Active Organ Detail Card */}
-              <div className="glass-panel" style={{ padding: "1.5rem", borderTop: "3px solid #f43f5e" }}>
+              <div
+                className="neo-card"
+                style={{
+                  padding: "1.5rem",
+                  background: "#ffffff",
+                  border: "3px solid #000000",
+                  boxShadow: "4px 4px 0px #000000",
+                  borderRadius: "8px"
+                }}
+              >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.75rem" }}>
                   <div>
-                    <span style={{ fontSize: "0.7rem", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--c-flow)", fontWeight: 700 }}>
+                    <span style={{ fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "#000000", fontWeight: 800 }}>
                       Selected Anatomical Target
                     </span>
-                    <h2 style={{ fontSize: "1.25rem", fontWeight: 700, marginTop: "0.2rem" }}>
+                    <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.4rem", fontWeight: 800, marginTop: "0.2rem" }}>
                       {selectedOrgan.name}
                     </h2>
                   </div>
@@ -325,27 +397,29 @@ export default function AnatomyPage() {
                   </span>
                 </div>
 
-                <div style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1rem" }}>
+                <div style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: "1.25rem", fontWeight: 500 }}>
                   {selectedOrgan.description}
                 </div>
 
                 {/* Symptoms / Clinical Presentation */}
-                <div style={{ marginBottom: "1rem" }}>
-                  <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "0.35rem" }}>
-                    <Thermometer size={14} color="#f59e0b" />
+                <div style={{ marginBottom: "1.25rem" }}>
+                  <div style={{ fontSize: "0.75rem", fontWeight: 800, color: "#000000", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                    <Thermometer size={14} color="#ff4d00" />
                     Clinical Presentation & Symptoms
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                     {selectedOrgan.symptoms.map((sym, idx) => (
                       <div
                         key={idx}
                         style={{
                           fontSize: "0.8rem",
-                          color: "var(--text-main)",
-                          background: "rgba(255, 255, 255, 0.04)",
-                          padding: "0.4rem 0.75rem",
-                          borderRadius: "var(--radius-sm)",
-                          borderLeft: "3px solid #f59e0b"
+                          color: "#000000",
+                          fontWeight: 600,
+                          background: "#fffbeb",
+                          padding: "0.45rem 0.85rem",
+                          borderRadius: "4px",
+                          border: "1.5px solid #000000",
+                          boxShadow: "1.5px 1.5px 0px #000000"
                         }}
                       >
                         {sym}
@@ -355,39 +429,61 @@ export default function AnatomyPage() {
                 </div>
 
                 {/* Biochemical Mechanism */}
-                <div style={{ background: "rgba(15, 23, 42, 0.7)", padding: "0.85rem 1rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-subtle)" }}>
-                  <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#38bdf8", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "0.35rem", display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                <div
+                  style={{
+                    background: "#f0fdf4",
+                    padding: "1rem",
+                    borderRadius: "6px",
+                    border: "2px solid #000000",
+                    boxShadow: "2px 2px 0px #000000"
+                  }}
+                >
+                  <div style={{ fontSize: "0.75rem", fontWeight: 800, color: "#000000", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.4rem", display: "flex", alignItems: "center", gap: "0.35rem" }}>
                     <Dna size={14} />
                     Biochemical & Cellular Mechanism
                   </div>
-                  <div style={{ fontSize: "0.8rem", color: "var(--text-secondary)", lineHeight: 1.5 }}>
+                  <div style={{ fontSize: "0.8rem", color: "#222222", lineHeight: 1.55, fontWeight: 500 }}>
                     {selectedOrgan.biochemical_mechanism}
                   </div>
                 </div>
               </div>
 
               {/* Cellular Pathway Architecture */}
-              <div className="clinical-card">
+              <div
+                className="clinical-card"
+                style={{
+                  background: "#ffffff",
+                  border: "2.5px solid #000000",
+                  boxShadow: "3px 3px 0px #000000"
+                }}
+              >
                 <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", marginBottom: "0.5rem" }}>
-                  <Stethoscope size={16} color="#10b981" />
-                  <span style={{ fontSize: "0.85rem", fontWeight: 700 }}>
+                  <Stethoscope size={16} color="#00a86b" />
+                  <span style={{ fontSize: "0.85rem", fontWeight: 800, textTransform: "uppercase" }}>
                     Cellular Pathway Architecture
                   </span>
                 </div>
-                <div style={{ fontSize: "0.8rem", color: "var(--text-secondary)", lineHeight: 1.5 }}>
+                <div style={{ fontSize: "0.8rem", color: "var(--text-secondary)", lineHeight: 1.55, fontWeight: 500 }}>
                   {anatomyData.cellular_pathway}
                 </div>
               </div>
 
               {/* Research Protocol Notice */}
-              <div className="clinical-card" style={{ background: "rgba(59, 130, 246, 0.08)", borderColor: "rgba(59, 130, 246, 0.3)" }}>
+              <div
+                className="clinical-card"
+                style={{
+                  background: "#e0f2fe",
+                  border: "2.5px solid #000000",
+                  boxShadow: "3px 3px 0px #000000"
+                }}
+              >
                 <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", marginBottom: "0.4rem" }}>
-                  <ShieldCheck size={16} color="#60a5fa" />
-                  <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#93c5fd" }}>
+                  <ShieldCheck size={16} color="#000000" />
+                  <span style={{ fontSize: "0.8rem", fontWeight: 800, color: "#000000", textTransform: "uppercase" }}>
                     Clinical Research Boundary
                   </span>
                 </div>
-                <div style={{ fontSize: "0.75rem", color: "var(--text-dim)", lineHeight: 1.4 }}>
+                <div style={{ fontSize: "0.75rem", color: "#333333", lineHeight: 1.45, fontWeight: 600 }}>
                   Inferred organ impacts represent in-silico AI pathophysiological modeling synthesized with biological databases (ClinVar/OMIM). For investigational research use only.
                 </div>
               </div>

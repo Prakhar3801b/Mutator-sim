@@ -1,50 +1,67 @@
 :root {
-  /* Minimalist Color Grading (Clinical Modern Dark Palette) */
-  --bg-main: #0b0f19;
-  --bg-surface: #111827;
-  --bg-card: rgba(17, 24, 39, 0.78);
-  --bg-card-hover: rgba(26, 36, 56, 0.9);
-  --bg-input: #0e1526;
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-active: rgba(59, 130, 246, 0.4);
-  --border-glow: rgba(0, 242, 254, 0.25);
+  /* =====================================================================
+     NEO-BRUTALISM THEME DESIGN SYSTEM (BIOTECH & GENOMICS EDITION)
+     Stark Black Outlines, Hard Unblurred Shadows, High-Voltage Contrast
+     Distinct Palette: Cyber Yellow, Electric Cyan, Signal Coral, Acid Mint
+     ===================================================================== */
+  --bg-main: #f5f2eb;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #fffdf5;
+  --bg-input: #ffffff;
   
-  /* Minimalist Graded Accents inspired by medical analytics */
-  --c-blue-primary: #3b82f6;
-  --c-blue-soft: #60a5fa;
-  --c-cyan-vibrant: #06b6d4;
-  --c-teal-card: #0d9488;
-  --c-emerald-safe: #10b981;
-  --c-rose-danger: #f43f5e;
-  --c-amber-warn: #f59e0b;
-  --c-violet-accent: #8b5cf6;
+  /* Stark High-Contrast Neo-Brutal Borders & Shadows */
+  --border-subtle: #000000;
+  --border-card: #000000;
+  --border-active: #000000;
+  --border-glow: #000000;
+  --border-thickness: 2.5px;
+  
+  --shadow-hard-sm: 2px 2px 0px #000000;
+  --shadow-hard-md: 4px 4px 0px #000000;
+  --shadow-hard-lg: 6px 6px 0px #000000;
+  --shadow-hard-xl: 8px 8px 0px #000000;
+  
+  /* Distinct Neo-Brutalist Colors (ZERO VIOLET/PURPLE) */
+  --c-neo-yellow: #ffe600;  /* Cyber Acid Yellow (Hero Primary) */
+  --c-neo-cyan: #00f0ff;    /* Electric Cyber Aqua */
+  --c-neo-coral: #ff4d00;   /* Signal Hot Coral / Danger */
+  --c-neo-mint: #00e599;    /* Acid Mint / Benign Safe */
+  --c-neo-blue: #2563eb;    /* Electric Cobalt */
+  --c-neo-pink: #ff2a85;    /* Fluorescent Shocking Pink */
+  --c-neo-black: #000000;   /* Pure Jet Black */
+  --c-neo-white: #ffffff;   /* Pure Stark White */
+  --c-neo-paper: #faf7f0;   /* Brutalist Cream Paper */
 
-  /* Color Coding System */
-  --c-original: #10b981;    /* 🟢 Original / unchanged */
-  --c-mutated: #f43f5e;     /* 🔴 Mutated / changed */
-  --c-flow: #38bdf8;        /* 🔵 Information flow */
-  --c-consequence: #fbbf24; /* 🟡 Consequence */
-  --c-ml: #a855f7;          /* 🟣 ML Analysis */
-  --c-neutral: #94a3b8;     /* ⚪ Context / metadata */
+  /* Biological Functional Semantics */
+  --c-original: #00b074;    /* 🟢 Wild-type / Unchanged */
+  --c-mutated: #ff3344;     /* 🔴 Mutated Nucleotide */
+  --c-flow: #00c8e0;        /* 🔵 Ribosome / Translation flow */
+  --c-consequence: #ff8800; /* 🟡 Consequence */
+  --c-ml: #ffe600;          /* ⚡ ML AI Engine */
+  --c-neutral: #525252;     /* ⚪ Context / Metadata */
   
-  --text-main: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
+  --text-main: #000000;
+  --text-secondary: #222222;
+  --text-muted: #555555;
+  --text-dim: #777777;
   
-  /* Nucleotide badge palettes */
-  --nt-a: #3b82f6; /* Adenine - Blue */
-  --nt-c: #10b981; /* Cytosine - Green */
-  --nt-g: #f59e0b; /* Guanine - Amber */
-  --nt-t: #ef4444; /* Thymine - Red */
+  /* Nucleotide high-contrast badge palettes */
+  --nt-a: #00e5ff; /* Adenine - Electric Cyan */
+  --nt-c: #00e599; /* Cytosine - Acid Mint */
+  --nt-g: #ffe600; /* Guanine - Cyber Yellow */
+  --nt-t: #ff3366; /* Thymine - Shocking Coral */
   
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 18px;
+  --radius-none: 0px;
+  --radius-xs: 3px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
   --radius-full: 9999px;
   
   --font-mono: 'JetBrains Mono', monospace, ui-monospace;
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Syne', 'Plus Jakarta Sans', sans-serif;
 }
 
 * {
@@ -53,12 +70,17 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--bg-main);
   background-image: 
-    radial-gradient(ellipse at 20% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 10%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 100%, rgba(6, 182, 212, 0.05) 0%, transparent 60%);
+    radial-gradient(#000000 1.25px, transparent 1.25px),
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px, 120px 120px, 120px 120px;
   color: var(--text-main);
   font-family: var(--font-sans);
   min-height: 100vh;
@@ -66,218 +88,373 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Glassmorphic & Minimalist Dashboard Cards */
-.glass-panel {
+/* =====================================================================
+   NEO-BRUTALIST PANELS & CONTAINERS
+   ===================================================================== */
+.glass-panel,
+.neo-card {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
+  border: 2.5px solid #000000;
+  border-radius: var(--radius-md);
   padding: 1.5rem;
-  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.35);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-hard-md);
+  transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.15s cubic-bezier(0.2, 0, 0, 1);
+  position: relative;
 }
 
-.glass-panel:hover {
-  border-color: rgba(255, 255, 255, 0.14);
+.glass-panel:hover,
+.neo-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hard-lg);
 }
 
-/* Medical Metric Hero Card (Inspired by Reference 2) */
+/* Hard Offset Neo-Brutalist Metric Cards */
 .metric-card {
   padding: 1.25rem 1.4rem;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   position: relative;
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border: 1px solid var(--border-subtle);
+  border: 2.5px solid #000000;
+  background: #ffffff;
+  box-shadow: var(--shadow-hard-md);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .metric-card:hover {
-  transform: translateY(-2px);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hard-lg);
 }
 
 .metric-card-blue {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(37, 99, 235, 0.05) 100%);
-  border-color: rgba(59, 130, 246, 0.3);
+  background: #e0f2fe;
+  border-color: #000000;
 }
 
 .metric-card-cyan {
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.18) 0%, rgba(14, 116, 144, 0.05) 100%);
-  border-color: rgba(6, 182, 212, 0.3);
+  background: #e0f7fa;
+  border-color: #000000;
 }
 
 .metric-card-rose {
-  background: linear-gradient(135deg, rgba(244, 63, 94, 0.18) 0%, rgba(190, 18, 60, 0.05) 100%);
-  border-color: rgba(244, 63, 94, 0.3);
+  background: #ffe4e6;
+  border-color: #000000;
 }
 
 .metric-card-emerald {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(5, 150, 105, 0.05) 100%);
-  border-color: rgba(16, 185, 129, 0.3);
+  background: #dcfce7;
+  border-color: #000000;
 }
 
-/* Glowing Accent Panels */
+.metric-card-purple,
+.metric-card-yellow {
+  background: #fef08a;
+  border-color: #000000;
+}
+
+/* Panel glow replacements -> Neo Brutal Colored Offset Shadows */
 .panel-glow-cyan {
-  border-color: rgba(6, 182, 212, 0.35);
-  box-shadow: 0 0 25px rgba(6, 182, 212, 0.08);
+  border: 2.5px solid #000000;
+  box-shadow: 4px 4px 0px #000000, 7px 7px 0px var(--c-neo-cyan);
 }
 
-.panel-glow-purple {
-  border-color: rgba(168, 85, 247, 0.35);
-  box-shadow: 0 0 25px rgba(168, 85, 247, 0.08);
+.panel-glow-purple,
+.panel-glow-yellow {
+  border: 2.5px solid #000000;
+  box-shadow: 4px 4px 0px #000000, 7px 7px 0px var(--c-neo-yellow);
 }
 
-/* Badges & Tags */
+/* =====================================================================
+   NEO-BRUTALIST BADGES & CHIPS
+   ===================================================================== */
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   padding: 0.25rem 0.65rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  font-weight: 600;
+  border-radius: var(--radius-xs);
+  font-size: 0.72rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0px #000000;
 }
 
-.badge-green { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-.badge-red { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
-.badge-cyan { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid rgba(6, 182, 212, 0.3); }
-.badge-amber { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
-.badge-purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
-.badge-blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+.badge-green { background: #00e599; color: #000000; }
+.badge-red { background: #ff3344; color: #ffffff; }
+.badge-cyan { background: #00f0ff; color: #000000; }
+.badge-amber { background: #ff9100; color: #000000; }
+.badge-purple,
+.badge-yellow { background: #ffe600; color: #000000; }
+.badge-blue { background: #60a5fa; color: #000000; }
 
-/* Buttons */
+/* =====================================================================
+   NEO-BRUTALIST TACTILE BUTTONS
+   ===================================================================== */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.6rem 1.2rem;
-  border-radius: var(--radius-md);
-  font-weight: 600;
-  font-size: 0.875rem;
+  padding: 0.65rem 1.35rem;
+  border-radius: var(--radius-sm);
+  font-weight: 800;
+  font-size: 0.85rem;
   cursor: pointer;
-  border: 1px solid transparent;
-  transition: all 0.2s ease;
+  border: 2.5px solid #000000;
+  box-shadow: var(--shadow-hard-md);
+  transition: all 0.12s ease;
   text-decoration: none;
+  user-select: none;
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hard-lg);
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #000000;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  color: #fff;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  background: var(--c-neo-yellow);
+  color: #000000;
 }
 
 .btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+  background: #fff033;
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-main);
-  border: 1px solid var(--border-subtle);
+  background: #ffffff;
+  color: #000000;
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: #f4f4f0;
 }
 
 .btn-simulate {
-  background: linear-gradient(135deg, #f43f5e, #ea580c);
-  color: #fff;
-  box-shadow: 0 4px 18px rgba(244, 63, 94, 0.4);
+  background: var(--c-neo-coral);
+  color: #ffffff;
   font-size: 0.95rem;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1.6rem;
+  letter-spacing: 0.03em;
 }
 
 .btn-simulate:hover {
-  box-shadow: 0 6px 25px rgba(244, 63, 94, 0.55);
-  transform: scale(1.02);
+  background: #ff2a00;
 }
 
+/* Editorial Neo-Brutal Pill Buttons */
+.pill-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius-sm);
+  border: 2.5px solid #000000;
+  background: var(--c-neo-yellow);
+  color: #000000;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-hard-md);
+  transition: all 0.12s ease;
+}
+
+.pill-btn-outline:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hard-lg);
+  background: #fff44f;
+}
+
+.pill-btn-outline:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #000000;
+}
+
+.pill-btn-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.35rem;
+  border-radius: var(--radius-sm);
+  background: #000000;
+  color: #ffffff;
+  border: 2px solid #000000;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-hard-md);
+  transition: all 0.12s ease;
+}
+
+.pill-btn-dark:hover {
+  background: #1a1a1a;
+  color: var(--c-neo-yellow);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hard-lg);
+}
+
+.pill-btn-dark:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #000000;
+}
+
+/* Side Navigation Rail */
+.side-nav-rail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-left: 0;
+}
+
+.side-nav-item {
+  position: relative;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  background: #ffffff;
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0px #000000;
+  border-radius: var(--radius-xs);
+  text-align: left;
+  padding: 0.5rem 0.85rem;
+  transition: all 0.12s ease;
+}
+
+.side-nav-item:hover {
+  background: var(--c-neo-yellow);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px #000000;
+}
+
+.side-nav-item.active {
+  background: var(--c-neo-yellow);
+  color: #000000;
+  font-weight: 800;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px #000000;
+  border-color: #000000;
+}
 
 /* Form Controls */
 .input-control {
   background: var(--bg-input);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
+  border: 2.5px solid #000000;
+  border-radius: var(--radius-sm);
   color: var(--text-main);
   padding: 0.65rem 1rem;
   font-size: 0.9rem;
+  font-weight: 600;
   outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 2px 2px 0px #000000;
+  transition: all 0.15s ease;
   width: 100%;
 }
 
 .input-control:focus {
-  border-color: var(--c-flow);
-  box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.15);
+  background: #fffdf5;
+  box-shadow: 4px 4px 0px #000000;
+  transform: translate(-1px, -1px);
 }
 
-/* Nucleotide Badge */
+/* Nucleotide Badge / Chip */
 .nt-chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2.2rem;
+  width: 2.2rem;
+  height: 2.3rem;
   font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 1rem;
-  border-radius: var(--radius-sm);
+  font-weight: 800;
+  font-size: 1.05rem;
+  border-radius: var(--radius-xs);
   user-select: none;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0px #000000;
+  transition: all 0.12s ease;
 }
 
-.nt-a { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
-.nt-c { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
-.nt-g { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
-.nt-t { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+.nt-chip:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px #000000;
+}
+
+.nt-a { background: #00f0ff; color: #000000; }
+.nt-c { background: #00e599; color: #000000; }
+.nt-g { background: #ffe600; color: #000000; }
+.nt-t { background: #ff3366; color: #ffffff; }
 
 .nt-highlight-mut {
-  background: #ef4444 !important;
-  color: #fff !important;
-  border: 2px solid #fecaca !important;
-  box-shadow: 0 0 15px rgba(239, 68, 68, 0.8) !important;
-  transform: scale(1.15);
+  background: #ff2200 !important;
+  color: #ffffff !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  transform: scale(1.15) !important;
   z-index: 10;
+  animation: neoPulse 1s infinite alternate;
 }
 
 .nt-highlight-orig {
-  background: #10b981 !important;
-  color: #fff !important;
-  border: 2px solid #a7f3d0 !important;
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.8) !important;
+  background: #00e599 !important;
+  color: #000000 !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
 }
 
 /* Animations */
+@keyframes neoPulse {
+  0% { transform: scale(1.12); box-shadow: 3px 3px 0px #000000; }
+  100% { transform: scale(1.22); box-shadow: 5px 5px 0px #000000; }
+}
+
 @keyframes pulseCodon {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-  50% { transform: scale(1.05); box-shadow: 0 0 20px 6px rgba(239, 68, 68, 0.6); }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
-@keyframes flowBeam {
-  0% { stroke-dashoffset: 100; opacity: 0.3; }
-  50% { opacity: 1; }
-  100% { stroke-dashoffset: 0; opacity: 0.3; }
+@keyframes tickerMove {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 
-@keyframes flipTile {
-  0% { transform: rotateY(0); }
-  50% { transform: rotateY(90deg); }
-  100% { transform: rotateY(0); }
+.neo-ticker-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+  background: #ffe600;
+  border-top: 2.5px solid #000000;
+  border-bottom: 2.5px solid #000000;
+  padding: 0.45rem 0;
+  box-shadow: 0px 4px 0px #000000;
 }
 
-.anim-pulse {
-  animation: pulseCodon 2s infinite ease-in-out;
+.neo-ticker-track {
+  display: inline-flex;
+  animation: tickerMove 28s linear infinite;
 }
 
-.anim-flip {
-  animation: flipTile 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+.neo-ticker-item {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #000000;
+  padding: 0 1.5rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 /* Reduced Motion Mode Support */
@@ -287,9 +464,12 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .neo-ticker-track {
+    animation: none !important;
+  }
 }
 
-/* Anatomy Canvas & Organ Hotspots (Inspired by Reference 3) */
+/* Anatomy Canvas & Organ Hotspots */
 .anatomy-container {
   display: grid;
   grid-template-columns: 340px 1fr 380px;
@@ -305,18 +485,16 @@ body {
 
 .hotspot-node {
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
 }
 
 .hotspot-node:hover circle.hotspot-pin {
   transform: scale(1.3);
-  filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8));
 }
 
 .hotspot-node.active circle.hotspot-pin {
-  stroke: #fff;
-  stroke-width: 2.5px;
-  filter: drop-shadow(0 0 14px rgba(244, 63, 94, 0.9));
+  stroke: #000000;
+  stroke-width: 3.5px;
 }
 
 .radar-ring {
@@ -325,28 +503,31 @@ body {
 }
 
 @keyframes radarWave {
-  0% { r: 6px; opacity: 0.9; stroke-width: 2px; }
-  100% { r: 24px; opacity: 0; stroke-width: 0.5px; }
+  0% { r: 6px; opacity: 0.9; stroke-width: 2.5px; stroke: #000000; }
+  100% { r: 24px; opacity: 0; stroke-width: 1px; stroke: #000000; }
 }
 
-/* Clinical Protocol Cards matching Reference 3 */
+/* Clinical Protocol Cards */
 .clinical-card {
-  background: rgba(17, 24, 39, 0.7);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
+  background: #ffffff;
+  border: 2.5px solid #000000;
+  border-radius: var(--radius-sm);
   padding: 1rem 1.25rem;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
+  box-shadow: var(--shadow-hard-sm);
 }
 
 .clinical-card:hover {
-  border-color: rgba(255, 255, 255, 0.16);
-  background: rgba(26, 36, 56, 0.75);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hard-md);
+  background: #fffdf5;
 }
 
 .clinical-card-active {
-  border-color: var(--c-blue-primary);
-  background: rgba(30, 58, 138, 0.25);
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+  border-color: #000000;
+  background: #ffe600;
+  box-shadow: var(--shadow-hard-md);
+  transform: translate(-2px, -2px);
 }
 
 /* Responsive Grid Layouts */
@@ -370,4 +551,3 @@ body {
     grid-template-columns: 1fr;
   }
 }
-

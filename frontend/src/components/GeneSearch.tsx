@@ -61,28 +61,37 @@ export const GeneSearch: React.FC<GeneSearchProps> = ({
   }, [query, organism]);
 
   return (
-    <div className="glass-panel">
+    <div
+      className="neo-card"
+      style={{
+        background: "#ffffff",
+        border: "3px solid #000000",
+        boxShadow: "5px 5px 0px #000000",
+        borderRadius: "8px",
+        padding: "1.25rem 1.5rem"
+      }}
+    >
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1rem" }}>
         <div style={{ flex: 1, minWidth: "260px", position: "relative" }}>
-          <Search size={18} color="var(--text-muted)" style={{ position: "absolute", left: "1rem", top: "50%", transform: "translateY(-50%)" }} />
+          <Search size={18} color="#000000" style={{ position: "absolute", left: "1rem", top: "50%", transform: "translateY(-50%)" }} />
           <input
             type="text"
             className="input-control"
-            style={{ paddingLeft: "2.75rem" }}
+            style={{ paddingLeft: "2.75rem", fontWeight: 700 }}
             placeholder="Search NCBI by gene symbol, name, or Gene ID (e.g. BRCA1, 672, TP53)..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
           {isLoading && (
-            <Loader2 size={18} className="anim-spin" style={{ position: "absolute", right: "1rem", top: "50%", transform: "translateY(-50%)", color: "var(--c-flow)" }} />
+            <Loader2 size={18} className="anim-spin" style={{ position: "absolute", right: "1rem", top: "50%", transform: "translateY(-50%)", color: "#000000" }} />
           )}
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <Globe size={16} color="var(--text-muted)" />
+          <Globe size={18} color="#000000" />
           <select
             className="input-control"
-            style={{ width: "auto", minWidth: "170px" }}
+            style={{ width: "auto", minWidth: "180px", fontWeight: 700 }}
             value={organism}
             onChange={(e) => setOrganism(e.target.value)}
           >
@@ -97,9 +106,9 @@ export const GeneSearch: React.FC<GeneSearchProps> = ({
 
       {/* Results Dropdown / Grid */}
       {hasSearched && results.length > 0 && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", maxHeight: "300px", overflowY: "auto", paddingRight: "0.25rem" }}>
-          <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "0.25rem" }}>
-            Found {totalCount} matching gene records in NCBI:
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", maxHeight: "320px", overflowY: "auto", paddingRight: "0.25rem" }}>
+          <div style={{ fontSize: "0.75rem", color: "var(--text-secondary)", fontWeight: 700, marginBottom: "0.25rem" }}>
+            FOUND {totalCount} MATCHING GENE RECORDS IN NCBI ENTREZ:
           </div>
           {results.map((r) => {
             const isSelected = selectedGeneId === r.gene_id;
@@ -110,20 +119,21 @@ export const GeneSearch: React.FC<GeneSearchProps> = ({
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  padding: "0.75rem 1rem",
-                  background: isSelected ? "rgba(0, 242, 254, 0.12)" : "rgba(255, 255, 255, 0.02)",
-                  border: isSelected ? "1px solid #00f2fe" : "1px solid var(--border-subtle)",
-                  borderRadius: "var(--radius-md)",
-                  transition: "all 0.15s ease"
+                  padding: "0.85rem 1rem",
+                  background: isSelected ? "#ffe600" : "#faf7f0",
+                  border: "2px solid #000000",
+                  boxShadow: isSelected ? "3px 3px 0px #000000" : "1.5px 1.5px 0px #000000",
+                  borderRadius: "4px",
+                  transition: "all 0.12s ease"
                 }}
               >
                 <div>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <span style={{ fontWeight: 700, color: "#fff" }}>{r.symbol}</span>
-                    <span className="badge badge-purple" style={{ fontSize: "0.6rem" }}>ID: {r.gene_id}</span>
-                    <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>Chr {r.chromosome}</span>
+                    <span style={{ fontWeight: 800, color: "#000000", fontFamily: "var(--font-mono)", fontSize: "1rem" }}>{r.symbol}</span>
+                    <span className="badge badge-cyan" style={{ fontSize: "0.6rem" }}>ID: {r.gene_id}</span>
+                    <span style={{ fontSize: "0.75rem", color: "#444444", fontWeight: 700 }}>Chr {r.chromosome}</span>
                   </div>
-                  <div style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
+                  <div style={{ fontSize: "0.8rem", color: "#333333", fontWeight: 600, marginTop: "0.2rem" }}>
                     {r.name}
                   </div>
                 </div>
@@ -131,7 +141,7 @@ export const GeneSearch: React.FC<GeneSearchProps> = ({
                 <button
                   onClick={() => onSelectGene(r.gene_id, r.symbol)}
                   className={`btn ${isSelected ? "btn-primary" : "btn-secondary"}`}
-                  style={{ fontSize: "0.75rem", padding: "0.35rem 0.75rem" }}
+                  style={{ fontSize: "0.75rem", padding: "0.35rem 0.8rem" }}
                 >
                   {isSelected ? (
                     <>
@@ -148,7 +158,7 @@ export const GeneSearch: React.FC<GeneSearchProps> = ({
       )}
 
       {hasSearched && !isLoading && results.length === 0 && (
-        <div style={{ padding: "1rem", textAlign: "center", color: "var(--text-muted)", fontSize: "0.85rem" }}>
+        <div style={{ padding: "1.25rem", textAlign: "center", color: "#000000", fontWeight: 700, fontSize: "0.85rem", background: "#fff2e8", border: "2px solid #000", borderRadius: "4px" }}>
           No genes found for &quot;{query}&quot; in {organism}. Try checking spelling or selecting another organism.
         </div>
       )}

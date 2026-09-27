@@ -80,28 +80,45 @@ export const ExportReportModal: React.FC<ExportReportModalProps> = ({
   };
 
   return (
-    <div style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      background: "rgba(0, 0, 0, 0.75)",
-      backdropFilter: "blur(6px)",
-      zIndex: 100,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "1.5rem"
-    }}>
-      <div className="glass-panel" style={{ width: "100%", maxWidth: "700px", maxHeight: "85vh", display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: "rgba(0, 0, 0, 0.65)",
+        zIndex: 100,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "1.5rem"
+      }}
+    >
+      <div
+        className="neo-card"
+        style={{
+          width: "100%",
+          maxWidth: "700px",
+          maxHeight: "85vh",
+          display: "flex",
+          flexDirection: "column",
+          background: "#ffffff",
+          border: "3.5px solid #000000",
+          boxShadow: "8px 8px 0px #000000",
+          borderRadius: "8px",
+          padding: "1.75rem"
+        }}
+      >
         {/* Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", borderBottom: "1px solid var(--border-subtle)", paddingBottom: "0.75rem" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", borderBottom: "2.5px solid #000000", paddingBottom: "0.85rem" }}>
           <div>
-            <h3 style={{ fontSize: "1.1rem", fontWeight: 700 }}>Export Computational Report</h3>
-            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>Download or copy structured analysis data</p>
+            <h3 style={{ fontSize: "1.15rem", fontWeight: 800, fontFamily: "var(--font-display)" }}>
+              Export Computational Report
+            </h3>
+            <p style={{ fontSize: "0.78rem", color: "var(--text-secondary)", fontWeight: 600 }}>Download or copy structured analysis data</p>
           </div>
-          <button onClick={onClose} className="btn btn-secondary" style={{ padding: "0.3rem 0.5rem" }}>
+          <button onClick={onClose} className="btn btn-secondary" style={{ padding: "0.35rem 0.55rem" }}>
             <X size={16} />
           </button>
         </div>
@@ -111,44 +128,48 @@ export const ExportReportModal: React.FC<ExportReportModalProps> = ({
           <button
             onClick={() => setActiveTab("markdown")}
             className={`btn ${activeTab === "markdown" ? "btn-primary" : "btn-secondary"}`}
-            style={{ fontSize: "0.8rem", padding: "0.4rem 0.8rem" }}
+            style={{ fontSize: "0.8rem", padding: "0.4rem 0.85rem" }}
           >
             <FileText size={14} /> Markdown (.md)
           </button>
           <button
             onClick={() => setActiveTab("json")}
             className={`btn ${activeTab === "json" ? "btn-primary" : "btn-secondary"}`}
-            style={{ fontSize: "0.8rem", padding: "0.4rem 0.8rem" }}
+            style={{ fontSize: "0.8rem", padding: "0.4rem 0.85rem" }}
           >
             <Code2 size={14} /> JSON (.json)
           </button>
         </div>
 
         {/* Content Preview */}
-        <pre style={{
-          flex: 1,
-          overflowY: "auto",
-          background: "rgba(0,0,0,0.4)",
-          border: "1px solid var(--border-subtle)",
-          borderRadius: "var(--radius-md)",
-          padding: "1rem",
-          fontSize: "0.75rem",
-          fontFamily: "var(--font-mono)",
-          color: "#cbd5e1",
-          whiteSpace: "pre-wrap"
-        }}>
+        <pre
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            background: "#faf7f0",
+            border: "2px solid #000000",
+            boxShadow: "2px 2px 0px #000000",
+            borderRadius: "6px",
+            padding: "1rem",
+            fontSize: "0.78rem",
+            fontFamily: "var(--font-mono)",
+            color: "#000000",
+            fontWeight: 600,
+            whiteSpace: "pre-wrap"
+          }}
+        >
           {activeTab === "markdown" ? mdText : jsonText}
         </pre>
 
         {/* Actions Footer */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1rem", paddingTop: "0.75rem", borderTop: "1px solid var(--border-subtle)" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1rem", paddingTop: "0.85rem", borderTop: "2px solid #000000", flexWrap: "wrap", gap: "0.5rem" }}>
           <button onClick={() => window.print()} className="btn btn-secondary" style={{ fontSize: "0.8rem" }}>
             <Printer size={14} /> Print
           </button>
 
           <div style={{ display: "flex", gap: "0.5rem" }}>
             <button onClick={handleCopy} className="btn btn-secondary" style={{ fontSize: "0.8rem" }}>
-              {copied ? <Check size={14} color="var(--c-original)" /> : <Copy size={14} />}
+              {copied ? <Check size={14} color="#00a86b" /> : <Copy size={14} />}
               {copied ? "Copied!" : "Copy to Clipboard"}
             </button>
             <button onClick={handleDownload} className="btn btn-primary" style={{ fontSize: "0.8rem" }}>
